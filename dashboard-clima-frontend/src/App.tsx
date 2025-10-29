@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface Clima {
   cidade: string;
@@ -39,7 +39,8 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-blue-100 p-4">
+    <div className="h-screen flex  items-center justify-center bg-blue-100 p-4">
+    <div className="absolute  top-60 left-50 bg-white text-sm text-gray-700">
       <h1 className="text-3xl text-black font-bold mb-6">🌤 Clima App</h1>
 
       <div className="flex gap-2 mb-6">
@@ -58,9 +59,10 @@ function App() {
           {loading ? "Buscando..." : "Buscar"}
         </button>
       </div>
+    </div>
 
       {clima && (
-        <div className="bg-white text-black p-6 rounded shadow-md w-80 text-center">
+        <div className="bg-white text-black p-6 rounded shadow-md w-350 h-100 text-center ">
           <h2 className="text-xl font-semibold mb-2">{clima.cidade}, {clima.pais}</h2>
           <img src={clima.icone} alt={clima.condicao} className="mx-auto mb-2"/>
           <p className="text-lg font-medium mb-1">{clima.condicao}</p>
