@@ -39,30 +39,28 @@ function App() {
   };
 
   return (
-    <div className="h-screen flex  items-center justify-center bg-blue-100 p-4">
-    <div className="absolute  top-60 left-50 bg-white text-sm text-gray-700">
-      <h1 className="text-3xl text-black font-bold mb-6">🌤 Clima App</h1>
+    <div className="h-screen flex flex-col items-center justify-center bg-blue-100">
+      <div className="bg-white text-sm text-gray-700 flex flex-col items-center p-4 rounded shadow-md">
+        <h1 className="text-3xl text-black font-bold mb-6">🌤 Clima App</h1>
 
-      <div className="flex gap-2 mb-6">
-        <input
-          type="text"
-          value={cidade}
-          onChange={(e) => setCidade(e.target.value)}
-          placeholder="Digite a cidade"
-          className="border text-black border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button
-          onClick={buscarClima}
-          className="bg-blue-500 text-black
-           px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-        >
-          {loading ? "Buscando..." : "Buscar"}
-        </button>
-      </div>
-    </div>
-
+        <div className="flex gap-2 mb-6">
+          <input
+            type="text"
+            value={cidade}
+            onChange={(e) => setCidade(e.target.value)}
+            placeholder="Digite a cidade"
+            className="border text-black border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            onClick={buscarClima}
+            className="bg-blue-500 text-white
+            px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+          >
+            {loading ? "Buscando..." : "Buscar"}
+          </button>
+        </div>
       {clima && (
-        <div className="bg-white text-black p-6 rounded shadow-md w-350 h-100 text-center ">
+        <div className="bg-white text-black p-6 w-350 h-80 text-center">
           <h2 className="text-xl font-semibold mb-2">{clima.cidade}, {clima.pais}</h2>
           <img src={clima.icone} alt={clima.condicao} className="mx-auto mb-2"/>
           <p className="text-lg font-medium mb-1">{clima.condicao}</p>
@@ -74,6 +72,8 @@ function App() {
           <p className="mt-2 text-sm text-gray-500">Atualizado em: {clima.atualizado_em}</p>
         </div>
       )}
+      </div>
+
     </div>
   );
 }
