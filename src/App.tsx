@@ -43,12 +43,12 @@ function App() {
   };
 
   return (
-  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 via-cyan-100 to-blue-100 p-4">
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-200 via-sky-200 to-teal-200 animate-gradient-shift p-4">
     <div className="w-[1600px] min-h-[1000px] h-auto min-w-[600px] max-w-[3000px]">
       <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden h-full">
           {/* Header */}
           <div className="bg-gradient-to-r from-green-600 to-cyan-600
-p-2 text-center rounded-t-3xl shadow-md shadow-teal-500/20">
+p-2 text-center rounded-t-3xl shadow-md animate-slide-down">
           <h1 className="text-4xl font-bold text-white tracking-wide drop-shadow-sm">PIMA</h1>
           <p className="text-emerald-50 text-sm italic">Consulte dados ambientais com precisão </p>
             </div>
@@ -91,7 +91,7 @@ p-2 text-center rounded-t-3xl shadow-md shadow-teal-500/20">
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
       
       {/* Card de Clima */}
-      <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg transition-all">
+      <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg hover:scale-105 hover:-translate-y-1 transition-all duration-300 animate-fade-in animation-delay-100 animate-border-glow">
         {/* Localização */}
         <div className="text-center mb-3">
           <h2 className="text-xl font-bold text-gray-800">
@@ -154,31 +154,33 @@ p-2 text-center rounded-t-3xl shadow-md shadow-teal-500/20">
       </div>
 
       {/* Card 2 - Placeholder  */}
-      <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg transition-all">
+      <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg hover:scale-105 hover:-translate-y-1 transition-all duration-300 animate-fade-in animation-delay-200 animate-border-glow">
         <h3 className="text-lg font-bold text-gray-800 mb-2">text2</h3>
         <p className="text-gray-600 text-sm">Dados em breve.</p>
       </div>
 
       {/* Card 3 - Placeholder */}
-      <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg transition-all">
+      <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-105 hover:-translate-y-1 duration-300 animate-fade-in animation-delay-200">
         <h3 className="text-lg font-bold text-gray-800 mb-2">text3</h3>
         <p className="text-gray-600 text-sm">Dados em breve</p>
       </div>
 
       {/* Card 4 - Placeholder */}
-      <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg transition-all">
+      <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg transition-all  hover:scale-105 hover:-translate-y-1 duration-300 animate-fade-in animation-delay-300">
         <h3 className="text-lg font-bold text-gray-800 mb-2">text4</h3>
         <p className="text-gray-600 text-sm">Dados em breve</p>
       </div>
 
       {/* Card 5 - Placeholder */}
-      <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg transition-all">
+      <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-105 hover:-translate-y-1 duration-300 animate-fade-in
+      animation-delay-300">
         <h3 className="text-lg font-bold text-gray-800 mb-2">text5</h3>
         <p className="text-gray-600 text-sm">Dados em breve</p>
       </div>
 
     {/* Card 6 - Placeholder */}
-      <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg transition-all">
+      <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-105 hover:-translate-y-1 duration-300 animate-fade-in
+      animation-delay-400">
         <h3 className="text-lg font-bold text-gray-800 mb-2">text6</h3>
         <p className="text-gray-600 text-sm">Dados em breve</p>
       </div>
