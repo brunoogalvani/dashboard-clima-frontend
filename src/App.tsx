@@ -123,8 +123,7 @@ function App() {
             {clima && (
               <div className="mt-3 text-center animate-fade-in">
                 <p className="text-gray-700 text-sm">
-                  <strong>{clima.cidade}</strong> ({clima.pais}) —{" "}
-                  <span className="font-semibold">{clima.horario_local}</span>
+                  <strong>{clima.cidade}</strong> ({clima.pais}) — <span className="font-semibold">{clima.horario_local}</span>
                 </p>
               </div>
             )}

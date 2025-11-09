@@ -43,7 +43,7 @@ export default function CardQualidade({ qualidade }: Props) {
 
           <div className="grid grid-cols-2 gap-2 mt-3 mb-5">
             <div className="bg-white/70 rounded-lg p-2">
-              <p className="text-gray-500 text-xs mb-1">Dominante</p>
+              <p className="text-gray-500 text-xs mb-1">Poluente Dominante</p>
               <p className="font-semibold text-gray-800 uppercase">
                 {qualidade.dominante || "-"}
               </p>
