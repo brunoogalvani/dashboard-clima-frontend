@@ -71,9 +71,6 @@ export default function MapaClimaInterativo({ cidade }: MapaClimaInterativoProps
             fillOpacity: 0.5,
           }}
         >
-          <Popup>
-            <strong>{cidade}</strong>
-          </Popup>
         </CircleMarker>
       </MapContainer>
     </div>

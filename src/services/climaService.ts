@@ -9,6 +9,8 @@ export interface Clima {
   vento_kph: number;
   icone: string;
   atualizado_em: string;
+  horario_local: string;
+  fuso_horario: string;
 }
 
 export async function buscarClima(cidade: string): Promise<Clima> {

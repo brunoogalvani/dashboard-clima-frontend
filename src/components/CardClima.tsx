@@ -10,9 +10,8 @@ export default function CardClima({ clima }: Props) {
         {/* Localização */}
         <div className="text-center mb-3">
           <h2 className="text-xl font-bold text-gray-800">
-            {clima.cidade}
+            Temperatura
           </h2>
-          <p className="text-gray-500 text-xs">{clima.pais}</p>
         </div>
 
         {/* Ícone e temp */}
@@ -33,7 +32,7 @@ export default function CardClima({ clima }: Props) {
         </div>
 
         {/* Detalhes */}
-        <div className="grid grid-cols-2 gap-2 mb-3">
+        <div className="grid grid-cols-2 gap-2 mb-7">
           <div className="bg-white/70 rounded-lg p-2 text-center">
             <p className="text-gray-500 text-xs mb-1">Sensação</p>
             <p className="text-sm font-semibold text-gray-800">
