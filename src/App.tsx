@@ -175,7 +175,7 @@ function App() {
             {/* Header */}
             <div className="bg-gradient-to-r from-green-600 to-cyan-600 p-2 text-center rounded-t-3xl shadow-md animate-slide-down">
               <h1 className="text-4xl font-bold text-white tracking-wide drop-shadow-sm">PIMA</h1>
-              <p className="text-emerald-50 text-sm italic">Consulte dados ambientais com precisão</p>
+              <p className="text-emerald-50 text-sm italic">Plataforma Integrada de Monitoramento Ambiental</p>
             </div>
 
             {/* Pesquisa */}
