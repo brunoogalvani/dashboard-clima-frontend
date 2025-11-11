@@ -7,6 +7,7 @@ import CardQualidade from "./components/CardQualidade";
 import CardClima from "./components/CardClima";
 import CardIncendios from "./components/CardIncendios";
 import Sidebar from "./components/Sidebar";
+import CardMapaIncendios from "./components/CardMapaIncendios";
 
 function App() {
   const [cidade, setCidade] = useState("São Paulo");
@@ -96,8 +97,13 @@ function App() {
                 Dados insuficientes para exibir o mapa.
               </p>
             )}
-          </div>
 
+            </div>
+            {/* 🌎 Novo Card - Mapa de Incêndios */}
+        <CardMapaIncendios cidade={cidadeBuscada} />
+
+        
+  
           {/* Incêndios */}
           {incendios ? (
             <CardIncendios incendios={incendios} />
@@ -106,6 +112,8 @@ function App() {
           )}
         </div>
       );
+
+      
 
     case "Clima":
       return clima ? (
