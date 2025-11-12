@@ -39,44 +39,45 @@ export default function MapaClimaInterativo({ cidade }: MapaClimaInterativoProps
 
 
   return (
-    <div className="w-full h-[260px] rounded-2xl overflow-hidden border border-emerald-200 shadow-sm">
-      <MapContainer
-        center={[coordenadas.lat, coordenadas.lon]}
-        zoom={5}
-        minZoom={3}
-        maxZoom={10}
-        zoomControl={false}
-        scrollWheelZoom={true}
-        doubleClickZoom={false}
-        dragging={true}
-        attributionControl={false}
-        style={{ height: "100%", width: "100%" }}
-      >
-        {/* Mapa limpo e suave */}
-    <TileLayer
-  url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-/>
-
-
-
-
-
-        {/* Centraliza o mapa quando muda de cidade */}
-        <RecenterMap lat={coordenadas.lat} lon={coordenadas.lon} />
-
-        {/* Marcador discreto da cidade */}
-        <CircleMarker
+    <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-3 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-103 hover:-translate-y-1 duration-300 animate-fade-in">
+      <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">Mapa Interativo</h3>
+      
+      <div className="w-full h-[260px] rounded-2xl overflow-hidden border border-emerald-200 shadow-sm">
+        <MapContainer
           center={[coordenadas.lat, coordenadas.lon]}
-          radius={8}
-          pathOptions={{
-            color: "#0d5fd1",
-            fillColor: "#0d5fd1",
-            fillOpacity: 0.5,
-          }}
+          zoom={5}
+          minZoom={3}
+          maxZoom={10}
+          zoomControl={false}
+          scrollWheelZoom={true}
+          doubleClickZoom={false}
+          dragging={true}
+          attributionControl={false}
+          style={{ height: "100%", width: "100%" }}
         >
-        </CircleMarker>
-      </MapContainer>
+
+          {/* Mapa limpo e suave */}
+          <TileLayer
+            url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+          />
+
+          {/* Centraliza o mapa quando muda de cidade */}
+          <RecenterMap lat={coordenadas.lat} lon={coordenadas.lon} />
+
+          {/* Marcador discreto da cidade */}
+          <CircleMarker
+            center={[coordenadas.lat, coordenadas.lon]}
+            radius={8}
+            pathOptions={{
+              color: "#0d5fd1",
+              fillColor: "#0d5fd1",
+              fillOpacity: 0.5,
+            }}
+          >
+          </CircleMarker>
+        </MapContainer>
+      </div>
     </div>
   );
 }
