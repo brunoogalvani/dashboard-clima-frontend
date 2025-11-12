@@ -8,6 +8,8 @@ import CardClima from "./components/CardClima";
 import CardIncendios from "./components/CardIncendios";
 import Sidebar from "./components/Sidebar";
 import CardMapaIncendios from "./components/CardMapaIncendios";
+import Horario from "./components/Horario";
+import InputAutocompleteCidade from "./components/AutoCompleteCidade";
 
 function App() {
   const [cidade, setCidade] = useState("");
@@ -180,15 +182,12 @@ function App() {
             {/* Pesquisa */}
             <div className="p-3">
               <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={cidade}
-                  onChange={(e) => setCidade(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Digite a cidade"
-                  className="flex-1 border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
-                  disabled={loading}
-                />
+                  <InputAutocompleteCidade
+                    value={cidade}
+                    setValue={setCidade}
+                    onSelect={buscarDados}
+                    disabled={loading}
+                  />
                 <button
                   onClick={buscarDados}
                   disabled={loading || !cidade.trim()}
@@ -210,7 +209,7 @@ function App() {
                 <div className="mt-3 text-center animate-fade-in">
                   <p className="text-gray-700 text-sm">
                     <strong>{clima.cidade}</strong> ({clima.pais}) —{" "}
-                    <span className="font-semibold">{clima.horario_local}</span>
+                    <span className="font-semibold"><Horario fuso={clima.fuso_horario}/></span>
                   </p>
                 </div>
               )}
