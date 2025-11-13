@@ -85,7 +85,10 @@ export default function Sidebar({ onSelect }: SidebarProps) {
         {open ? (
           <>
             <p>© {new Date().getFullYear()} PIMA</p>
-            <p className="italic text-white/50">TESTEEEE</p>
+            <p className="italic text-white/50"></p>
+            <a className="italic text-white/50 hover:underline" href="/docs/index.html" target="_blank">
+              Ver Documentação
+            </a>
           </>
         ) : (
           <p className="text-xs">©</p>

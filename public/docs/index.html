@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Documentação - PIMA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tema padrão do Docsify -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  </head>
+  <body>
+    <div id="app">Carregando documentação...</div>
+
+    <script>
+      window.$docsify = {
+        name: 'PIMA Dashboard',
+        loadSidebar: true,
+        subMaxLevel: 2
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const fixedTitle = 'Documentação - PIMA';
+        const observer = new MutationObserver(() => {
+          if (document.title !== fixedTitle) {
+            document.title = fixedTitle;
+          }
+        });
+        observer.observe(document.querySelector('title'), { childList: true });
+      });
+    </script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  </body>
+</html>
