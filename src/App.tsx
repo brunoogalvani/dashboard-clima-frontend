@@ -10,6 +10,7 @@ import Sidebar from "./components/Sidebar";
 import CardMapaIncendios from "./components/CardMapaIncendios";
 import Horario from "./components/Horario";
 import InputAutocompleteCidade from "./components/AutoCompleteCidade";
+import { buscarDadosGerais } from "./services/dadosService";
 
 function App() {
   const [cidade, setCidade] = useState("");
@@ -21,29 +22,35 @@ function App() {
   const [erro, setErro] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
-  const buscarDados = async () => {
+  const buscarDados = async (nomeCidade?: string) => {
+    const cidadeParaBuscar = nomeCidade?.trim() || cidade.trim();
     if (!cidade.trim()) return;
     setLoading(true);
     setErro(false);
-
     setClima(null);
     setQualidade(null);
     setIncendios(null);
 
     try {
-      const resultados = await Promise.allSettled([
-        buscarClima(cidade),
-        buscarQualidadeAr(cidade),
-        buscarIncendios(cidade),
-      ]);
+      // const resultados = await Promise.allSettled([
+      //   buscarClima(cidadeParaBuscar),
+      //   buscarQualidadeAr(cidadeParaBuscar),
+      //   buscarIncendios(cidadeParaBuscar),
+      // ]);
 
-      if (resultados[0].status === "fulfilled") setClima(resultados[0].value);
-      if (resultados[1].status === "fulfilled") setQualidade(resultados[1].value);
-      if (resultados[2].status === "fulfilled") setIncendios(resultados[2].value);
+      // if (resultados[0].status === "fulfilled") setClima(resultados[0].value);
+      // if (resultados[1].status === "fulfilled") setQualidade(resultados[1].value);
+      // if (resultados[2].status === "fulfilled") setIncendios(resultados[2].value);
 
-      setCidadeBuscada(cidade);
-      const falhas = resultados.filter((r) => r.status === "rejected").length;
-      if (falhas >= 2) setErro(true);
+      // setCidadeBuscada(cidadeParaBuscar);
+      // const falhas = resultados.filter((r) => r.status === "rejected").length;
+      // if (falhas >= 2) setErro(true);
+      const dados = await buscarDadosGerais(cidadeParaBuscar);
+
+      setClima(dados.clima || null)
+      setQualidade(dados.qualidade || null)
+      setIncendios(dados.incendios || null)
+      setCidadeBuscada(cidadeParaBuscar)
     } catch (e) {
       console.error(e);
       setErro(true);
@@ -185,11 +192,14 @@ function App() {
                   <InputAutocompleteCidade
                     value={cidade}
                     setValue={setCidade}
-                    onSelect={buscarDados}
+                    onSelect={(novaCidade) => {
+                      setCidade(novaCidade);
+                      buscarDados(novaCidade);
+                    }}
                     disabled={loading}
                   />
                 <button
-                  onClick={buscarDados}
+                  onClick={() => buscarDados(cidade)}
                   disabled={loading || !cidade.trim()}
                   className="bg-gradient-to-r from-sky-400 to-blue-400 hover:from-sky-500 hover:to-blue-500 text-white font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all"
                 >

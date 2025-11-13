@@ -29,7 +29,7 @@ export default function Horario({ fuso }: { fuso: string }) {
 
   return (
     <>
-      {hora.toFormat("yyyy-MM-dd HH:mm")}
+      {hora.toFormat("yyyy-MM-dd HH:mm:ss")}
     </>
   );
 }

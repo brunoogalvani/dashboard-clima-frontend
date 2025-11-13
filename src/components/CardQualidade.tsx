@@ -23,6 +23,9 @@ export default function CardQualidade({ qualidade }: Props) {
     return "Perigosa";
   };
 
+  const getPoluente = (tipo: string) =>
+  qualidade?.poluentes?.find((p) => p.tipo === tipo)?.valor ?? "-";
+
   return (
     <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg hover:scale-103 hover:-translate-y-1 transition-all duration-300 animate-fade-in animation-delay-100">
       <h3 className="text-lg font-bold text-gray-800 mb-3 text-center">
@@ -45,32 +48,32 @@ export default function CardQualidade({ qualidade }: Props) {
             <div className="bg-white/70 rounded-lg p-2">
               <p className="text-gray-500 text-xs mb-1">Poluente Dominante</p>
               <p className="font-semibold text-gray-800 uppercase">
-                {qualidade.dominante || "-"}
+                {qualidade.dominancia || "-"}
               </p>
             </div>
             <div className="bg-white/70 rounded-lg p-2">
               <p className="text-gray-500 text-xs mb-1">PM2.5</p>
               <p className="font-semibold text-gray-800">
-                {qualidade.pm25 ?? "-"} µg/m³
+                {getPoluente("pm25")} µg/m³
               </p>
             </div>
             <div className="bg-white/70 rounded-lg p-2">
               <p className="text-gray-500 text-xs mb-1">PM10</p>
               <p className="font-semibold text-gray-800">
-                {qualidade.pm10 ?? "-"} µg/m³
+                {getPoluente("pm10")} µg/m³
               </p>
             </div>
             <div className="bg-white/70 rounded-lg p-2">
               <p className="text-gray-500 text-xs mb-1">O₃</p>
               <p className="font-semibold text-gray-800">
-                {qualidade.o3 ?? "-"} µg/m³
+                {getPoluente("o3")} µg/m³
               </p>
             </div>
           </div>
 
           <div className="text-center pt-2 border-t border-emerald-200">
             <p className="text-xs text-gray-500">
-              {qualidade.atualizado_em}
+              {qualidade.hora_atualizada}
             </p>
           </div>
         </div>

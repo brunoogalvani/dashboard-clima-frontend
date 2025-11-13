@@ -73,50 +73,54 @@ export default function MapaClimaInterativo({ cidade }: MapaClimaInterativoProps
 }, [cidade]);
 
   return (
-    <div className="w-full h-[260px] rounded-2xl overflow-hidden border border-emerald-200 shadow-sm">
-      <MapContainer
-        center={[coordenadas.lat, coordenadas.lon]}
-        zoom={6}
-        minZoom={3}
-        maxZoom={10}
-        zoomControl={false}
-        scrollWheelZoom
-        doubleClickZoom={false}
-        dragging
-        attributionControl={false}
-        style={{ height: "100%", width: "100%" }}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
-        />
+    <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-3 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-103 hover:-translate-y-1 duration-300 animate-fade-in">
+      <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">Focos de Incêndio</h3>
 
-        <RecenterMap lat={coordenadas.lat} lon={coordenadas.lon} />
+      <div className="w-full h-[260px] rounded-2xl overflow-hidden border border-emerald-200 shadow-sm">
+        <MapContainer
+          center={[coordenadas.lat, coordenadas.lon]}
+          zoom={6}
+          minZoom={3}
+          maxZoom={10}
+          zoomControl={false}
+          scrollWheelZoom
+          doubleClickZoom={false}
+          dragging
+          attributionControl={false}
+          style={{ height: "100%", width: "100%" }}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
+          />
 
-        {/* 🔥 Layer de calor usando leaflet.heat */}
-        {incendios.length > 0 && (
-          <HeatmapLayer incendios={incendios} />
-        )}
+          <RecenterMap lat={coordenadas.lat} lon={coordenadas.lon} />
 
-        {/* 🔴 Marcadores individuais */}
-        {incendios.map((inc, index) => (
-          <CircleMarker
-            key={index}
-            center={[inc.lat, inc.lon]}
-            radius={4}
-            pathOptions={{
-              color: "#ef4444",
-              fillColor: "#f87171",
-              fillOpacity: 0.7,
-            }}
-          >
-            <Popup>
-              <p><strong>🔥 Incêndio detectado</strong></p>
-              <p>Intensidade: {(inc.intensidade * 100).toFixed(0)}%</p>
-            </Popup>
-          </CircleMarker>
-        ))}
-      </MapContainer>
+          {/* 🔥 Layer de calor usando leaflet.heat */}
+          {incendios.length > 0 && (
+            <HeatmapLayer incendios={incendios} />
+          )}
+
+          {/* 🔴 Marcadores individuais */}
+          {incendios.map((inc, index) => (
+            <CircleMarker
+              key={index}
+              center={[inc.lat, inc.lon]}
+              radius={4}
+              pathOptions={{
+                color: "#ef4444",
+                fillColor: "#f87171",
+                fillOpacity: 0.7,
+              }}
+            >
+              <Popup>
+                <p><strong>🔥 Incêndio detectado</strong></p>
+                <p>Intensidade: {(inc.intensidade * 100).toFixed(0)}%</p>
+              </Popup>
+            </CircleMarker>
+          ))}
+        </MapContainer>
+      </div>
     </div>
   );
 }

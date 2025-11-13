@@ -14,7 +14,6 @@ export default function CardIncendios({ incendios }: Props) {
           <h2 className="text-lg font-bold text-gray-800 flex justify-center items-center gap-2">
             Risco de Incêndio
           </h2>
-          <p className="text-gray-500 text-xs">{incendios.cidade}</p>
         </div>
 
         {/* Dados */}

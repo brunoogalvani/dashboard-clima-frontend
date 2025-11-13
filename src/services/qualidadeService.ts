@@ -1,11 +1,16 @@
+export interface Poluente {
+  tipo: string;
+  valor: number;
+}
+
 export interface QualidadeAr {
   aqi: number;
-  dominante: string;
-  pm25?: number;
-  pm10?: number;
-  no2?: number;
-  o3?: number;
-  atualizado_em: string;
+  dominancia: string;
+  poluentes?: Poluente[];
+  pm25?: number | null;
+  pm10?: number | null;
+  o3?: number | null;
+  hora_atualizada?: string;
 }
 
 export async function buscarQualidadeAr(cidade: string): Promise<QualidadeAr> {
@@ -20,11 +25,8 @@ export async function buscarQualidadeAr(cidade: string): Promise<QualidadeAr> {
 
   return {
     aqi: data.aqi,
-    dominante: data.dominancia || "-",
-    pm25,
-    pm10,
-    no2,
-    o3,
-    atualizado_em: data.hora_atualizada || "-",
+    dominancia: data.dominancia || "-",
+    poluentes: data.poluentes,
+    hora_atualizada: data.hora_atualizada || "-",
   };
 }
