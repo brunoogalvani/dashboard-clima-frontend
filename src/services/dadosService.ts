@@ -6,6 +6,7 @@ export interface Dados {
     clima: Clima,
     qualidade: QualidadeAr,
     incendios: Incendios
+    previsao?: any;
 }
 
 export async function buscarDadosGerais(cidade: string): Promise<Dados> {

@@ -11,6 +11,9 @@ import CardMapaIncendios from "./components/CardMapaIncendios";
 import Horario from "./components/Horario";
 import InputAutocompleteCidade from "./components/AutoCompleteCidade";
 import { buscarDadosGerais } from "./services/dadosService";
+import CardPrevisao from "./components/CardPrevisao";
+import type { Previsao } from "./services/previsaoService"; // ou onde definiu a interface Previsao
+
 
 function App() {
   const [cidade, setCidade] = useState("");
@@ -21,6 +24,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const [previsao, setPrevisao] = useState<Previsao | null>(null);
+
 
   const buscarDados = async (nomeCidade?: string) => {
     const cidadeParaBuscar = nomeCidade?.trim() || cidade.trim();
@@ -45,12 +50,22 @@ function App() {
       // setCidadeBuscada(cidadeParaBuscar);
       // const falhas = resultados.filter((r) => r.status === "rejected").length;
       // if (falhas >= 2) setErro(true);
+
+      
+
+
+
+
       const dados = await buscarDadosGerais(cidadeParaBuscar);
 
       setClima(dados.clima || null)
       setQualidade(dados.qualidade || null)
       setIncendios(dados.incendios || null)
       setCidadeBuscada(cidadeParaBuscar)
+      
+      setPrevisao(dados.previsao ?? null);
+
+
     } catch (e) {
       console.error(e);
       setErro(true);
@@ -125,11 +140,12 @@ function App() {
       
 
     case "Clima":
-      return clima ? (
-        <CardClima clima={clima} />
-      ) : (
-        fallbackCard("Clima", "Não foi possível obter os dados climáticos.")
-      );
+  return cidadeBuscada ? (
+    <CardPrevisao cidade={cidadeBuscada} previsao={previsao} />
+  ) : (
+    fallbackCard("Clima", "Não foi possível obter os dados climáticos.")
+  );
+
 
     case "Qualidade do Ar":
       return qualidade ? (
