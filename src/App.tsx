@@ -25,7 +25,7 @@ function App() {
   const [erro, setErro] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const [previsao, setPrevisao] = useState<Previsao | null>(null);
-
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const buscarDados = async (nomeCidade?: string) => {
     const cidadeParaBuscar = nomeCidade?.trim() || cidade.trim();
@@ -188,10 +188,10 @@ function App() {
     >
 
       {/* Sidebar */}
-      <Sidebar onSelect={setSelected} />
+      <Sidebar onSelect={setSelected} onToggle={setSidebarOpen} />
 
       {/* Conteúdo principal */}
-          <div className="flex-1 flex justify-center items-center p-3 md:p-6 overflow-y-auto transition-all duration-700 ease-in-out">
+          <div className={`${sidebarOpen ? "ml-64" : "ml-20"} flex-1 flex justify-center items-center p-3 md:p-6 overflow-y-auto transition-all duration-700 ease-in-out`}>
             <div
               className="w-full max-w-6xl bg-white/80 backdrop-blur-2xl rounded-3xl shadow-[0_8px_40px_-12px_rgba(0,0,0,0.3)] border border-white/20 hover:scale-[1.01] hover:shadow-emerald-500/20 transition-all duration-700 ease-in-out flex flex-col"
             >

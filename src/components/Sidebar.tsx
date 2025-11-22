@@ -3,11 +3,18 @@ import { Home, Cloud, Wind, Flame, Map, Menu, X } from "lucide-react";
 
 interface SidebarProps {
   onSelect: (page: string) => void;
+  onToggle: (open: boolean) => void;
 }
 
-export default function Sidebar({ onSelect }: SidebarProps) {
+export default function Sidebar({ onSelect, onToggle }: SidebarProps) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("Dashboard");
+
+  const toggle = () => {
+    const novoEstado = !open;
+    setOpen(novoEstado);
+    onToggle(novoEstado);
+  }
 
   const links = [
     { icon: Home, label: "Dashboard" },
@@ -19,12 +26,12 @@ export default function Sidebar({ onSelect }: SidebarProps) {
 
   return (
     <div
-      className={`${open ? "w-64" : "w-20"} h-screen bg-gradient-to-b from-emerald-900 via-emerald-800 to-cyan-800 text-white flex flex-col transition-all duration-500 hover:scale-[1.01] hover:brightness-110 hover:shadow-emerald-500/20 ease-in-out shadow-[0_0_25px_-5px_rgba(0,0,0,0.4)] backdrop-blur-md border-r border-emerald-500/20`}
+      className={`${open ? "w-64" : "w-20"} h-screen bg-gradient-to-b from-emerald-900 via-emerald-800 to-cyan-800 text-white flex flex-col transition-all duration-500 hover:scale-[1.01] hover:brightness-110 hover:shadow-emerald-500/20 ease-in-out shadow-[0_0_25px_-5px_rgba(0,0,0,0.4)] backdrop-blur-md border-r border-emerald-500/20 fixed`}
     >
       {/* Header + Toggle */}
       <div className={`${open? "border-b border-white/10" : ""} flex flex-col items-center py-5 relative`}>
         <button
-          onClick={() => setOpen(!open)}
+          onClick={toggle}
           className={`${open ? "right-1" : ""} absolute top-3 p-2 rounded-lg bg-transparent hover:bg-white/10 transition-all text-white focus:outline-none focus:ring-0`}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
