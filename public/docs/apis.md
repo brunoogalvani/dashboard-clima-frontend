@@ -1,32 +1,59 @@
 # APIs Utilizadas
 
-## WeatherAPI
-Fornece informações sobre:
-- Temperatura atual
+## WeatherAPI (Clima Atual)
+- Temperatura
 - Sensação térmica
-- Umidade e vento
-- Ícone de condição
+- Umidade
+- Condição e ícone
 
-Endpoint usado: `https://api.weatherapi.com/v1/current.json`
+Endpoint:
 
----
-
-## AQICN (Air Quality Index)
-Retorna dados de poluição e qualidade do ar.
-
-Endpoint usado: `https://api.waqi.info/feed`
+https://api.weatherapi.com/v1/current.json
 
 ---
 
-## NASA FIRMS
-Retorna os focos de incêndio detectados via satélite.
+## Open-Meteo (Previsão de 15 dias)
+Usada para previsão estendida com:
+- Máxima / mínima
+- Probabilidade de chuva
+- Nascer e pôr do sol
 
-Endpoint usado: `https://firms.modaps.eosdis.nasa.gov/api`
+Endpoint:
+
+https://api.open-meteo.com/v1/forecast
 
 ---
 
-## Endpoint Unificado do Backend
-```bash
+## AQICN (Qualidade do Ar)
+Retorna:
+- AQI
+- Poluentes
+- Situação da qualidade
+
+Endpoint:
+
+https://api.waqi.info/feed
+
+---
+
+## NASA FIRMS (Incêndios)
+Dados de satélite em tempo real.
+
+NASA FIRMS (MODIS/VIIRS) - CSV
+
+---
+
+## Endpoint Unificado (Backend)
+
 GET /api/dados?cidade=Sao Paulo
+
+Retorna:
+
+```json
+{
+  "clima": { ... },
+  "previsao": { ... },
+  "qualidade": { ... },
+  "incendios": { ... }
+}
 ```
-Retorna clima, qualidade e incêndios no mesmo JSON.

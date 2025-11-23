@@ -1,31 +1,46 @@
-# PIMA - Plataforma Integrada de Monitoramento Ambiental
+# PIMA – Documentação Oficial
 
-O **PIMA** é um dashboard interativo que reúne dados de clima, qualidade do ar e incêndios florestais em tempo real.
+O **PIMA** é uma plataforma interativa que exibe:
+
+- Clima atual
+- Previsão de até 15 dias
+- Qualidade do ar
+- Focos de incêndio detectados por satélite
+- Mapas interativos de clima e incêndios
+
+O projeto é composto por dois repositórios:
+
+- **Frontend (React + TypeScript)**  
+  https://github.com/brunoogalvani/dashboard-clima-frontend  
+- **Backend (Node.js + Express)**  
+  https://github.com/brunoogalvani/dashboard-clima-backend  
 
 ---
 
-## Funcionalidades
-- Consulta unificada de clima, qualidade do ar e incêndios via endpoint `/dados`
-- Interface responsiva em React
-- Integração com múltiplas APIs (WeatherAPI, AQICN, NASA FIRMS)
-- Atualização automática dos dados da cidade selecionada
+## Funcionalidades Principais
+✔ Prévia do clima atual  
+✔ Previsão de até 15 dias (Open-Meteo)  
+✔ Qualidade do ar (AQICN)  
+✔ Incêndios florestais (NASA FIRMS)  
+✔ Mapa interativo com camadas  
+✔ Busca por cidade  
+✔ UI responsiva, com modo cards e mapa
 
 ---
 
-## Estrutura do Projeto
+## Estrutura Geral
 
-```
-pima/
-├── backend/        # API Node.js (porta 3000)
-├── frontend/       # Dashboard React (porta 5173)
-└── docs/           # Documentação (Docsify - porta 3001)
-```
+pima/  
+├── backend/ # API Node.js (porta 3000)  
+├── frontend/ # Aplicação React (porta 5173)  
+└── docs/ # Documentação Docsify
 
 ---
 
 ## Seções da Documentação
-- [Instalação e Execução](instalacao.md)
+
+- [Instalação / Execução](instalacao.md)
 - [Arquitetura](arquitetura.md)
 - [APIs Utilizadas](apis.md)
-- [Contribuição](contribuicao.md)
-
+- [Backend](backend.md)
+- [Frontend](frontend.md)

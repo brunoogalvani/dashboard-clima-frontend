@@ -1,42 +1,45 @@
-# Backend (Node.js + Express)
+# Backend – Node.js + Express
 
-O backend serve como **orquestrador de múltiplas APIs externas**, garantindo que o frontend receba respostas padronizadas.
-
----
-
-## Estrutura
-
-/backend
-├── server.js
-├── routes/
-│ ├── climaRoutes.js
-│ ├── qualidadeRoutes.js
-│ ├── incendiosRoutes.js
-│ └── mapaRoutes.js
-├── services/
-│ ├── climaService.js
-│ ├── qualidadeService.js
-│ ├── incendiosService.js
-│ ├── mapaService.js
-│ └── dadosService.js ← integra tudo
-└── controllers/
-└── dadosController.js
+O backend funciona como um agregador de APIs externas, convertendo formatos variados em um JSON limpo e padronizado para o frontend.
 
 ---
 
-## Endpoint Unificado
+# Estrutura
 
-### `GET /api/dados?cidade={nome}`
+backend/  
+├── server.js # inicialização  
+├── routes/ # rotas  
+├── controllers/ # lógica da API  
+├── services/ # integrações com APIs externas  
+└── utils/ # validações, formatadores, etc  
 
-Retorna todos os dados consolidados:
+---
+
+# Endpoints Principais
+
+### `GET /api/clima?cidade=Sao Paulo`
+Clima atual (WeatherAPI)
+
+### `GET /api/previsao?cidade=Sao Paulo`
+Previsão de até 15 dias (Open-Meteo)
+
+### `GET /api/qualidade?cidade=Sao Paulo`
+Qualidade do ar (AQICN)
+
+### `GET /api/incendios?cidade=Sao Paulo`
+Incêndios próximos (NASA FIRMS)
+
+### `GET /api/dados?cidade=Sao Paulo`
+**Endpoint unificado**
+
+Retorna:
 
 ```json
 {
   "cidade": "Sao Paulo",
-  "pais": "Brazil",
-  "lat": -23.55,
-  "lon": -46.63,
   "clima": { ... },
+  "previsao": { ... },
   "qualidade": { ... },
   "incendios": { ... }
 }
+```
