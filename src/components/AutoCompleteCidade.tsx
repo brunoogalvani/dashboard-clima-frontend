@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-
-interface CidadeSugestao {
-  id: string;
-  name: string;
-  countryCode: string;
-}
+import type { CidadeSugestao } from "../types/apiTypes";
 
 function InputAutocompleteCidade({
   onSelect,
@@ -22,7 +17,6 @@ function InputAutocompleteCidade({
   const [focused, setFocused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 🔍 Buscar sugestões quando o usuário digitar
   useEffect(() => {
     if (value.length < 3) {
       setSugestoes([]);
@@ -58,7 +52,6 @@ function InputAutocompleteCidade({
     return () => clearTimeout(timeout);
   }, [value]);
 
-  // 🧠 Fecha a lista se clicar fora do componente
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -69,7 +62,6 @@ function InputAutocompleteCidade({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ✅ Seleciona a cidade
   const handleSelect = (cidade: string) => {
     setValue(cidade);
     setFocused(false);
@@ -77,7 +69,6 @@ function InputAutocompleteCidade({
     onSelect(cidade);
   };
 
-  // ⌨️ Pressionar Enter para buscar
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && value.trim() !== "") {
       e.preventDefault();

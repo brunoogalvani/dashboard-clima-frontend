@@ -1,8 +1,8 @@
 import { useEffect, useState, type JSX } from "react";
-import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-interface MapaClimaInterativoProps {
+interface Props {
   cidade: string;
 }
 
@@ -10,16 +10,15 @@ function RecenterMap({ lat, lon }: { lat: number; lon: number }) {
   const map = useMap();
 
   useEffect(() => {
-    map.setView([lat, lon], 8, { animate: true }); // centraliza com zoom 6
+    map.setView([lat, lon], 8, { animate: true });
   }, [lat, lon, map]);
 
   return null;
 }
 
-export default function MapaClimaInterativo({ cidade }: MapaClimaInterativoProps): JSX.Element {
+export default function MapaClimaInterativo({ cidade }: Props): JSX.Element {
   const [coordenadas, setCoordenadas] = useState({ lat: -15.78, lon: -47.93 });
 
-  // Buscar coordenadas da cidade pesquisada
   useEffect(() => {
     async function buscarCoordenadas() {
       if (!cidade.trim()) return;
@@ -39,7 +38,7 @@ export default function MapaClimaInterativo({ cidade }: MapaClimaInterativoProps
 
 
   return (
-    <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-3 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-103 hover:-translate-y-1 duration-300 animate-fade-in">
+    <div className="bg-linear-to-br from-white to-emerald-50 rounded-2xl p-3 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-103 hover:-translate-y-1 duration-300 animate-fade-in">
       <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">Mapa Interativo</h3>
       
       <div className="w-full h-[260px] rounded-2xl overflow-hidden border border-emerald-200 shadow-sm">
@@ -56,16 +55,13 @@ export default function MapaClimaInterativo({ cidade }: MapaClimaInterativoProps
           style={{ height: "100%", width: "100%" }}
         >
 
-          {/* Mapa limpo e suave */}
           <TileLayer
             url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
           />
 
-          {/* Centraliza o mapa quando muda de cidade */}
           <RecenterMap lat={coordenadas.lat} lon={coordenadas.lon} />
 
-          {/* Marcador discreto da cidade */}
           <CircleMarker
             center={[coordenadas.lat, coordenadas.lon]}
             radius={8}

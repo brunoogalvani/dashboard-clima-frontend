@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat";
 
-interface MapaClimaInterativoProps {
+interface Props {
   cidade: string;
 }
 
@@ -16,11 +16,10 @@ function RecenterMap({ lat, lon }: { lat: number; lon: number }) {
   return null;
 }
 
-export default function MapaClimaInterativo({ cidade }: MapaClimaInterativoProps): JSX.Element {
+export default function MapaClimaInterativo({ cidade }: Props): JSX.Element {
   const [coordenadas, setCoordenadas] = useState({ lat: -15.78, lon: -47.93 });
   const [incendios, setIncendios] = useState<{ lat: number; lon: number; intensidade: number }[]>([]);
 
-  // 🔍 Buscar coordenadas
   useEffect(() => {
     async function buscarCoordenadas() {
       if (!cidade.trim()) return;
@@ -37,16 +36,12 @@ export default function MapaClimaInterativo({ cidade }: MapaClimaInterativoProps
     buscarCoordenadas();
   }, [cidade]);
 
-  // 🔥 Buscar incêndios
   useEffect(() => {
   async function buscarIncendios() {
     try {
       const response = await fetch(`http://localhost:3000/api/incendios?cidade=${cidade}`);
       const data = await response.json();
 
-      console.log("🔥 Dados brutos de incêndios:", data);
-
-      // ✅ Se o backend retornar um objeto com a chave 'incendios'
       const lista = Array.isArray(data) ? data : data?.incendios;
 
       if (lista && Array.isArray(lista) && lista.length > 0) {
@@ -73,7 +68,7 @@ export default function MapaClimaInterativo({ cidade }: MapaClimaInterativoProps
 }, [cidade]);
 
   return (
-    <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-3 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-103 hover:-translate-y-1 duration-300 animate-fade-in">
+    <div className="bg-linear-to-br from-white to-emerald-50 rounded-2xl p-3 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-103 hover:-translate-y-1 duration-300 animate-fade-in">
       <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">Focos de Incêndio</h3>
 
       <div className="w-full h-[260px] rounded-2xl overflow-hidden border border-emerald-200 shadow-sm">
@@ -96,12 +91,10 @@ export default function MapaClimaInterativo({ cidade }: MapaClimaInterativoProps
 
           <RecenterMap lat={coordenadas.lat} lon={coordenadas.lon} />
 
-          {/* 🔥 Layer de calor usando leaflet.heat */}
           {incendios.length > 0 && (
             <HeatmapLayer incendios={incendios} />
           )}
 
-          {/* 🔴 Marcadores individuais */}
           {incendios.map((inc, index) => (
             <CircleMarker
               key={index}
@@ -134,7 +127,6 @@ function HeatmapLayer({ incendios }: { incendios: { lat: number; lon: number; in
 
     const heatPoints = incendios.map((i) => [i.lat, i.lon, i.intensidade] as [number, number, number]);
 
-    // @ts-ignore – adiciona o plugin manualmente
     const heat = (L as any).heatLayer(heatPoints, {
       radius: 20,
       blur: 25,

@@ -1,19 +1,15 @@
 import { useState } from "react";
-import { buscarClima, type Clima } from "./services/climaService";
-import { buscarQualidadeAr, type QualidadeAr } from "./services/qualidadeService";
-import { buscarIncendios, type Incendios } from "./services/incendiosService";
-import MapaClimaInterativo from "./components/MapaClimaInterativo";
-import CardQualidade from "./components/CardQualidade";
+import type { Clima, Previsao, QualidadeAr, Incendios } from "./types/apiTypes";
 import CardClima from "./components/CardClima";
+import CardQualidade from "./components/CardQualidade";
 import CardIncendios from "./components/CardIncendios";
-import Sidebar from "./components/Sidebar";
 import CardMapaIncendios from "./components/CardMapaIncendios";
+import MapaClimaInterativo from "./components/MapaClimaInterativo";
+import CardPrevisao from "./components/CardPrevisao";
+import Sidebar from "./components/Sidebar";
 import Horario from "./components/Horario";
 import InputAutocompleteCidade from "./components/AutoCompleteCidade";
 import { buscarDadosGerais } from "./services/dadosService";
-import CardPrevisao from "./components/CardPrevisao";
-import type { Previsao } from "./services/previsaoService"; // ou onde definiu a interface Previsao
-
 
 function App() {
   const [cidade, setCidade] = useState("");
@@ -35,36 +31,16 @@ function App() {
     setClima(null);
     setQualidade(null);
     setIncendios(null);
+    setPrevisao(null);
 
     try {
-      // const resultados = await Promise.allSettled([
-      //   buscarClima(cidadeParaBuscar),
-      //   buscarQualidadeAr(cidadeParaBuscar),
-      //   buscarIncendios(cidadeParaBuscar),
-      // ]);
-
-      // if (resultados[0].status === "fulfilled") setClima(resultados[0].value);
-      // if (resultados[1].status === "fulfilled") setQualidade(resultados[1].value);
-      // if (resultados[2].status === "fulfilled") setIncendios(resultados[2].value);
-
-      // setCidadeBuscada(cidadeParaBuscar);
-      // const falhas = resultados.filter((r) => r.status === "rejected").length;
-      // if (falhas >= 2) setErro(true);
-
-      
-
-
-
-
       const dados = await buscarDadosGerais(cidadeParaBuscar);
 
       setClima(dados.clima || null)
       setQualidade(dados.qualidade || null)
       setIncendios(dados.incendios || null)
       setCidadeBuscada(cidadeParaBuscar)
-      
       setPrevisao(dados.previsao ?? null);
-
 
     } catch (e) {
       console.error(e);
@@ -74,16 +50,11 @@ function App() {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") buscarDados();
-  };
-
   const renderContent = () => {
   if (loading) {
     return <p className="text-gray-700 text-center mt-6">Carregando dados...</p>;
   }
 
-  // Função auxiliar para fallback visual
   const fallbackCard = (titulo: string, mensagem: string) => (
     <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 border border-white/30 shadow-[0_4px_30px_rgba(0,0,0,0.1)] flex flex-col items-center justify-center text-center text-gray-700 animate-fade-in-scale hover:scale-103 hover:-translate-y-1 hover:shadow-emerald-500/20 transition-all duration-500 ease-in-out">
       <h3 className="text-lg font-semibold text-gray-800 mb-2">{titulo}</h3>
@@ -118,14 +89,14 @@ function App() {
             fallbackCard("Qualidade do Ar", "Não foi possível coletar dados de qualidade do ar.")
           )}
 
-          {/* Mapa */}
+          {/* Mapa Interativo*/}
           {clima || qualidade || incendios ? (
             <MapaClimaInterativo cidade={cidadeBuscada} />
           ) : (
             fallbackCard("Mapa Interativo", "Dados insuficientes para exibir o mapa.")
           )}
 
-          {/* 🌎 Novo Card - Mapa de Incêndios */}
+          {/* Mapa de Incêndios */}
           <CardMapaIncendios cidade={cidadeBuscada} />
 
           {/* Incêndios */}
@@ -137,15 +108,12 @@ function App() {
         </div>
       );
 
-      
-
     case "Clima":
-  return cidadeBuscada ? (
-    <CardPrevisao cidade={cidadeBuscada} previsao={previsao} />
-  ) : (
-    fallbackCard("Clima", "Não foi possível obter os dados climáticos.")
-  );
-
+      return cidadeBuscada ? (
+        <CardPrevisao cidade={cidadeBuscada} previsao={previsao} clima={clima} />
+      ) : (
+        fallbackCard("Clima", "Não foi possível obter os dados climáticos.")
+      );
 
     case "Qualidade do Ar":
       return qualidade ? (
@@ -156,7 +124,12 @@ function App() {
 
     case "Incêndios":
       return incendios ? (
-        <CardIncendios incendios={incendios} />
+        <>
+        <div className="flex flex-col gap-6">
+          <CardIncendios incendios={incendios} />
+          <CardMapaIncendios cidade={cidadeBuscada} />
+        </div>
+        </>
       ) : (
         fallbackCard("Incêndios", "Não foi possível obter informações de incêndios.")
       );
@@ -167,9 +140,7 @@ function App() {
           {clima || qualidade || incendios ? (
             <MapaClimaInterativo cidade={cidadeBuscada} />
           ) : (
-            <p className="text-gray-600 text-sm text-center p-4">
-              Dados insuficientes para exibir o mapa.
-            </p>
+            fallbackCard("Mapa", "Não foi possível exibir o mapa.")
           )}
         </>
       );
@@ -181,7 +152,7 @@ function App() {
 
   return (
     <div
-      className="flex min-h-screen bg-gradient-to-br from-emerald-300 via-sky-300 to-teal-400 transition-all duration-700 ease-in-out overflow-hidden"
+      className="flex min-h-screen bg-linear-to-br from-emerald-300 via-sky-300 to-teal-400 transition-all duration-700 ease-in-out overflow-hidden"
       style={{backgroundImage: 
         `radial-gradient(at top left, rgba(255, 255, 255, 0.08), transparent 70%), linear-gradient(to bottom right, #065f46, #0e7490, #115e59)`,
       }}
@@ -197,7 +168,7 @@ function App() {
             >
 
             {/* Header */}
-            <div className="bg-gradient-to-r from-green-600 to-cyan-600 p-2 text-center rounded-t-3xl shadow-md animate-slide-down">
+            <div className="bg-linear-to-r from-green-600 to-cyan-600 p-2 text-center rounded-t-3xl shadow-md animate-slide-down">
               <h1 className="text-4xl font-bold text-white tracking-wide drop-shadow-sm">PIMA</h1>
               <p className="text-emerald-50 text-sm italic">Plataforma Integrada de Monitoramento Ambiental</p>
             </div>
@@ -217,7 +188,7 @@ function App() {
                 <button
                   onClick={() => buscarDados(cidade)}
                   disabled={loading || !cidade.trim()}
-                  className="bg-gradient-to-r from-sky-400 to-blue-400 hover:from-sky-500 hover:to-blue-500 text-white font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all"
+                  className="bg-linear-to-r from-sky-400 to-blue-400 hover:from-sky-500 hover:to-blue-500 text-white font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all"
                 >
                   {loading ? "..." : "Buscar"}
                 </button>
@@ -231,7 +202,7 @@ function App() {
                 </div>
               )}
 
-              {clima && (
+              {(clima && qualidade && incendios) && (
                 <div className="mt-3 text-center animate-fade-in">
                   <p className="text-gray-700 text-sm">
                     <strong>{clima.cidade}</strong> ({clima.pais}) —{" "}

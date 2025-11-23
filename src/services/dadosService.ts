@@ -1,12 +1,10 @@
-import type { Clima } from "./climaService";
-import type { Incendios } from "./incendiosService";
-import type { QualidadeAr } from "./qualidadeService";
+import type { Clima, Previsao, Incendios, QualidadeAr } from "../types/apiTypes";
 
 export interface Dados {
     clima: Clima,
+    previsao: Previsao;
     qualidade: QualidadeAr,
     incendios: Incendios
-    previsao?: any;
 }
 
 export async function buscarDadosGerais(cidade: string): Promise<Dados> {

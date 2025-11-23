@@ -1,17 +1,4 @@
-export interface Poluente {
-  tipo: string;
-  valor: number;
-}
-
-export interface QualidadeAr {
-  aqi: number;
-  dominancia: string;
-  poluentes?: Poluente[];
-  pm25?: number | null;
-  pm10?: number | null;
-  o3?: number | null;
-  hora_atualizada?: string;
-}
+import type { QualidadeAr } from '../types/apiTypes'
 
 export async function buscarQualidadeAr(cidade: string): Promise<QualidadeAr> {
   const res = await fetch(`http://localhost:3000/api/qualidade?cidade=${cidade}`);

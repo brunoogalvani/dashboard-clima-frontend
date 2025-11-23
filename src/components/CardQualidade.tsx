@@ -1,4 +1,4 @@
-import type { QualidadeAr } from "../services/qualidadeService";
+import type { QualidadeAr } from "../types/apiTypes";
 
 interface Props {
   qualidade: QualidadeAr | null;
@@ -27,7 +27,7 @@ export default function CardQualidade({ qualidade }: Props) {
   qualidade?.poluentes?.find((p) => p.tipo === tipo)?.valor ?? "-";
 
   return (
-    <div className="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg hover:scale-103 hover:-translate-y-1 transition-all duration-300 animate-fade-in animation-delay-100">
+    <div className="bg-linear-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg hover:scale-103 hover:-translate-y-1 transition-all duration-300 animate-fade-in animation-delay-100">
       <h3 className="text-lg font-bold text-gray-800 mb-3 text-center">
         Qualidade do Ar
       </h3>
