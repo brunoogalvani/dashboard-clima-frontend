@@ -4,11 +4,12 @@ import { Home, Cloud, Wind, Flame, Map, Menu, X } from "lucide-react";
 interface Props {
   onSelect: (page: string) => void;
   onToggle: (open: boolean) => void;
+  active: string;
 }
 
-export default function Sidebar({ onSelect, onToggle }: Props) {
+export default function Sidebar({ onSelect, onToggle, active = "Dashboard" }: Props) {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("Dashboard");
+  // const [active, setActive] = useState("Dashboard");
 
   const toggle = () => {
     const novoEstado = !open;
@@ -54,7 +55,7 @@ export default function Sidebar({ onSelect, onToggle }: Props) {
             <button
               key={link.label}
               onClick={() => {
-                setActive(link.label);
+                // setActive(link.label);
                 onSelect(link.label);
               }}
               className={`group flex items-center gap-4 rounded-xl p-3 relative w-full text-left overflow-hidden transition-all duration-300 focus:outline-none focus:ring-0 ${isActive ? "bg-linear-to-r from-emerald-600/40 to-cyan-600/30 text-white shadow-lg shadow-emerald-900/40" : "hover:bg-white/10 text-white/80 hover:text-white"}`}

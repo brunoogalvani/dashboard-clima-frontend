@@ -1,10 +1,13 @@
+import { SquareArrowOutUpRight } from "lucide-react";
 import type { QualidadeAr } from "../types/apiTypes";
 
 interface Props {
   qualidade: QualidadeAr | null;
+  showExpand?: boolean;
+  onExpand?: () => void;
 }
 
-export default function CardQualidade({ qualidade }: Props) {
+export default function CardQualidade({ qualidade, showExpand, onExpand }: Props) {
   const corAqi = (aqi: number) => {
     if (aqi <= 50) return "text-green-600";
     if (aqi <= 100) return "text-yellow-500";
@@ -28,7 +31,14 @@ export default function CardQualidade({ qualidade }: Props) {
 
   return (
     <div className="bg-linear-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg hover:scale-103 hover:-translate-y-1 transition-all duration-300 animate-fade-in animation-delay-100">
-      <h3 className="text-lg font-bold text-gray-800 mb-3 text-center">
+      {showExpand && (
+        <SquareArrowOutUpRight
+          className="absolute top-4 right-4 rounded-lg cursor-pointer hover:scale-110 transition-all w-5 h-5 text-gray-800"
+          onClick={onExpand}
+        />
+      )}
+
+      <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">
         Qualidade do Ar
       </h3>
 
@@ -44,7 +54,7 @@ export default function CardQualidade({ qualidade }: Props) {
 
           <p className="text-gray-500 text-sm">{descricao(qualidade.aqi)}</p>
 
-          <div className="grid grid-cols-2 gap-2 mt-3 mb-5">
+          <div className="grid grid-cols-2 gap-2 mt-2 mb-3">
             <div className="bg-white/70 rounded-lg p-2">
               <p className="text-gray-500 text-xs mb-1">Poluente Dominante</p>
               <p className="font-semibold text-gray-800 uppercase">

@@ -1,9 +1,12 @@
 import { useEffect, useState, type JSX } from "react";
 import { MapContainer, TileLayer, CircleMarker, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { SquareArrowOutUpRight } from "lucide-react";
 
 interface Props {
   cidade: string;
+  showExpand?: boolean;
+  onExpand?: () => void;
 }
 
 function RecenterMap({ lat, lon }: { lat: number; lon: number }) {
@@ -16,7 +19,7 @@ function RecenterMap({ lat, lon }: { lat: number; lon: number }) {
   return null;
 }
 
-export default function MapaClimaInterativo({ cidade }: Props): JSX.Element {
+export default function MapaClimaInterativo({ cidade, showExpand, onExpand }: Props): JSX.Element {
   const [coordenadas, setCoordenadas] = useState({ lat: -15.78, lon: -47.93 });
 
   useEffect(() => {
@@ -39,9 +42,16 @@ export default function MapaClimaInterativo({ cidade }: Props): JSX.Element {
 
   return (
     <div className="bg-linear-to-br from-white to-emerald-50 rounded-2xl p-3 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-103 hover:-translate-y-1 duration-300 animate-fade-in">
+      {showExpand && (
+        <SquareArrowOutUpRight
+          className="absolute top-4 right-4 rounded-lg cursor-pointer hover:scale-110 transition-all w-5 h-5 text-gray-800"
+          onClick={onExpand}
+        />
+      )}
+
       <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">Mapa Interativo</h3>
       
-      <div className="w-full h-[260px] rounded-2xl overflow-hidden border border-emerald-200 shadow-sm">
+      <div className="w-full h-[250px] rounded-2xl overflow-hidden border border-emerald-200 shadow-sm">
         <MapContainer
           center={[coordenadas.lat, coordenadas.lon]}
           zoom={5}

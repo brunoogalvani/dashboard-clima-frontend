@@ -73,35 +73,32 @@ function App() {
       }
 
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 auto-rows-fr transition-all duration-500 animate-fade-in-scale">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3.5 auto-rows-auto transition-all duration-500 animate-fade-in-scale">
 
           {/* Clima */}
           {clima ? (
-            <CardClima clima={clima} />
+            <CardClima clima={clima} showExpand={selected === "Dashboard"} onExpand={() => setSelected("Clima")} />
           ) : (
             fallbackCard("Clima", "Não foi possível obter os dados climáticos.")
           )}
 
           {/* Qualidade do ar */}
           {qualidade ? (
-            <CardQualidade qualidade={qualidade} />
+            <CardQualidade qualidade={qualidade} showExpand={selected === "Dashboard"} onExpand={() => setSelected("Qualidade do Ar")} />
           ) : (
             fallbackCard("Qualidade do Ar", "Não foi possível coletar dados de qualidade do ar.")
           )}
 
           {/* Mapa Interativo*/}
           {clima || qualidade || incendios ? (
-            <MapaClimaInterativo cidade={cidadeBuscada} />
+            <MapaClimaInterativo cidade={cidadeBuscada} showExpand={selected === "Dashboard"} onExpand={() => setSelected("Mapa")} />
           ) : (
             fallbackCard("Mapa Interativo", "Dados insuficientes para exibir o mapa.")
           )}
 
-          {/* Mapa de Incêndios */}
-          <CardMapaIncendios cidade={cidadeBuscada} />
-
           {/* Incêndios */}
           {incendios ? (
-            <CardIncendios incendios={incendios} />
+            <CardIncendios incendios={incendios} showExpand={selected === "Dashboard"} onExpand={() => setSelected("Incêndios")} />
           ) : (
             fallbackCard("Incêndios", "Não foi possível obter informações de incêndios.")
           )}
@@ -125,7 +122,7 @@ function App() {
     case "Incêndios":
       return incendios ? (
         <>
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-3.5">
           <CardIncendios incendios={incendios} />
           <CardMapaIncendios cidade={cidadeBuscada} />
         </div>
@@ -159,7 +156,7 @@ function App() {
     >
 
       {/* Sidebar */}
-      <Sidebar onSelect={setSelected} onToggle={setSidebarOpen} />
+      <Sidebar onSelect={setSelected} onToggle={setSidebarOpen} active={selected} />
 
       {/* Conteúdo principal */}
           <div className={`${sidebarOpen ? "ml-64" : "ml-20"} flex-1 flex justify-center items-center p-3 md:p-6 overflow-y-auto transition-all duration-700 ease-in-out`}>
