@@ -75,3 +75,7 @@ export interface CidadeSugestao {
   name: string;
   countryCode: string;
 }
+
+export interface ApiErro {
+  erro: string;
+}
