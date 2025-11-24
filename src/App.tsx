@@ -9,7 +9,9 @@ import CardPrevisao from "./components/CardPrevisao";
 import Sidebar from "./components/Sidebar";
 import Horario from "./components/Horario";
 import InputAutocompleteCidade from "./components/AutoCompleteCidade";
-import { buscarDadosGerais } from "./services/dadosService";
+import { buscarDadosGerais, type Dados } from "./services/dadosService";
+
+
 
 function App() {
   const [cidade, setCidade] = useState("");
@@ -23,6 +25,14 @@ function App() {
   const [previsao, setPrevisao] = useState<Previsao | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const atualizarDados = (dados: Dados, nomeCidade: string) => {
+    setClima(dados.clima || null);
+    setQualidade(dados.qualidade || null);
+    setIncendios(dados.incendios || null);
+    setPrevisao(dados.previsao || null);
+    setCidadeBuscada(nomeCidade);
+  };
+
   const buscarDados = async (nomeCidade?: string) => {
     const cidadeParaBuscar = nomeCidade?.trim() || cidade.trim();
     if (!cidade.trim()) return;
@@ -35,13 +45,30 @@ function App() {
 
     try {
       const dados = await buscarDadosGerais(cidadeParaBuscar);
+      atualizarDados(dados, cidadeParaBuscar);
+       } catch (e) {
+      console.error(e);
+      setErro(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      setClima(dados.clima || null)
+      /*setClima(dados.clima || null)
       setQualidade(dados.qualidade || null)
       setIncendios(dados.incendios || null)
       setCidadeBuscada(cidadeParaBuscar)
-      setPrevisao(dados.previsao ?? null);
+      setPrevisao(dados.previsao ?? null);*/
 
+    const handleDadosAtualizados = async (dados: Dados) => {
+    setLoading(true);
+    setErro(false);
+    
+    try {
+      // Atualizar o nome da cidade baseado nas coordenadas
+      const nomeCidade = dados.clima?.cidade || "Localização selecionada";
+      atualizarDados(dados, nomeCidade);
+      setCidade(nomeCidade); // Atualizar o input também
     } catch (e) {
       console.error(e);
       setErro(true);
@@ -49,6 +76,8 @@ function App() {
       setLoading(false);
     }
   };
+
+
 
   const renderContent = () => {
   if (loading) {
@@ -91,7 +120,7 @@ function App() {
 
           {/* Mapa Interativo*/}
           {clima || qualidade || incendios ? (
-            <MapaClimaInterativo cidade={cidadeBuscada} showExpand={selected === "Dashboard"} onExpand={() => setSelected("Mapa")} />
+            <MapaClimaInterativo cidade={cidadeBuscada} showExpand={selected === "Dashboard"} onExpand={() => setSelected("Mapa")} onDadosAtualizados={handleDadosAtualizados} />
           ) : (
             fallbackCard("Mapa Interativo", "Dados insuficientes para exibir o mapa.")
           )}
