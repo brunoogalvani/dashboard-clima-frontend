@@ -1,9 +1,9 @@
-import type { Clima, Previsao, Incendios, QualidadeAr } from "../types/apiTypes";
+import type { Clima, Previsao, Incendios, QualidadeAr, ApiErro } from "../types/apiTypes";
 
 export interface Dados {
-    clima: Clima,
-    previsao: Previsao;
-    qualidade: QualidadeAr,
+    clima: Clima | ApiErro,
+    previsao: Previsao | ApiErro;
+    qualidade: QualidadeAr | ApiErro,
     incendios: Incendios
 }
 

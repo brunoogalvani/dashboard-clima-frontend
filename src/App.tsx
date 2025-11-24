@@ -36,11 +36,26 @@ function App() {
     try {
       const dados = await buscarDadosGerais(cidadeParaBuscar);
 
-      setClima(dados.clima || null)
-      setQualidade(dados.qualidade || null)
+      if ("erro" in dados.clima) {
+        setClima(null);
+      } else {
+        setClima(dados.clima);
+      }
+
+      if ("erro" in dados.qualidade) {
+        setQualidade(null);
+      } else {
+        setQualidade(dados.qualidade);
+      }
+
+      if ("erro" in dados.previsao) {
+        setPrevisao(null);
+      } else {
+        setPrevisao(dados.previsao);
+      }
+
       setIncendios(dados.incendios || null)
       setCidadeBuscada(cidadeParaBuscar)
-      setPrevisao(dados.previsao ?? null);
 
     } catch (e) {
       console.error(e);
