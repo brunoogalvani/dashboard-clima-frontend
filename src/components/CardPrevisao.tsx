@@ -99,12 +99,12 @@ export default function CardPrevisao({ cidade, previsao, clima }: Props) {
 
               <p>
                 <span className="font-semibold">Máx: </span>
-                {dia.temperatura_max}°C
+                {Math.round(dia.temperatura_max)}°C
               </p>
 
               <p>
                 <span className="font-semibold">Min: </span>
-                {dia.temperatura_min}°C
+                {Math.round(dia.temperatura_min)}°C
               </p>
 
               <p>
