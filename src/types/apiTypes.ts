@@ -79,3 +79,10 @@ export interface CidadeSugestao {
 export interface ApiErro {
   erro: string;
 }
+
+export interface Dados {
+    clima: Clima | ApiErro,
+    previsao: Previsao | ApiErro;
+    qualidade: QualidadeAr | ApiErro,
+    incendios: Incendios
+}

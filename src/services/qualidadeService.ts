@@ -5,11 +5,6 @@ export async function buscarQualidadeAr(cidade: string): Promise<QualidadeAr> {
   if (!res.ok) throw new Error("Erro ao buscar qualidade do ar");
   const data = await res.json();
 
-  const pm25 = data.poluentes?.find((p: any) => p.tipo === "pm25")?.valor ?? null;
-  const pm10 = data.poluentes?.find((p: any) => p.tipo === "pm10")?.valor ?? null;
-  const no2 = data.poluentes?.find((p: any) => p.tipo === "no2")?.valor ?? null;
-  const o3 = data.poluentes?.find((p: any) => p.tipo === "o3")?.valor ?? null;
-
   return {
     aqi: data.aqi,
     dominancia: data.dominancia || "-",

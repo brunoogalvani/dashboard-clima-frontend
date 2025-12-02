@@ -1,5 +1,5 @@
-import { useState, type SetStateAction } from "react";
-import type { Clima, Previsao, QualidadeAr, Incendios } from "./types/apiTypes";
+import { useState } from "react";
+import type { Clima, Previsao, QualidadeAr, Incendios, Dados } from "./types/apiTypes";
 import CardClima from "./components/CardClima";
 import CardQualidade from "./components/CardQualidade";
 import CardIncendios from "./components/CardIncendios";
@@ -9,7 +9,7 @@ import CardPrevisao from "./components/CardPrevisao";
 import Sidebar from "./components/Sidebar";
 import Horario from "./components/Horario";
 import InputAutocompleteCidade from "./components/AutoCompleteCidade";
-import { buscarDadosGerais, type Dados } from "./services/dadosService";
+import { buscarDadosGerais } from "./services/dadosService";
 
 // ---------------------------------------------
 // 💡 CORREÇÃO 1: Definindo o tipo de erro (assumindo que o erro tem uma prop 'erro')
