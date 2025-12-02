@@ -10,6 +10,7 @@ import Sidebar from "./components/Sidebar";
 import Horario from "./components/Horario";
 import InputAutocompleteCidade from "./components/AutoCompleteCidade";
 import { buscarDadosGerais } from "./services/dadosService";
+import CardQualidadeExpandida from "./components/CardQualidadeExpandido";
 
 // ---------------------------------------------
 // 💡 CORREÇÃO 1: Definindo o tipo de erro (assumindo que o erro tem uma prop 'erro')
@@ -149,7 +150,7 @@ function App() {
 
       case "Qualidade do Ar":
         return qualidade ? (
-          <CardQualidade qualidade={qualidade} />
+          <CardQualidadeExpandida qualidade={qualidade} />
         ) : (
           fallbackCard("Qualidade do Ar", "Não foi possível coletar dados de qualidade do ar.")
         );

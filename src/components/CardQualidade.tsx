@@ -10,11 +10,11 @@ interface Props {
 export default function CardQualidade({ qualidade, showExpand, onExpand }: Props) {
   const corAqi = (aqi: number) => {
     if (aqi <= 50) return "text-green-600";
-    if (aqi <= 100) return "text-yellow-500";
-    if (aqi <= 150) return "text-orange-500";
-    if (aqi <= 200) return "text-red-600";
+    if (aqi <= 100) return "text-yellow-400";
+    if (aqi <= 150) return "text-orange-400";
+    if (aqi <= 200) return "text-rose-400";
     if (aqi <= 300) return "text-purple-600";
-    return "text-gray-800";
+    return "text-red-700";
   };
 
   const descricao = (aqi: number) => {
