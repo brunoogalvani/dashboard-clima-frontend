@@ -12,17 +12,15 @@ import InputAutocompleteCidade from "./components/AutoCompleteCidade";
 import { buscarDadosGerais } from "./services/dadosService";
 import CardQualidadeExpandida from "./components/CardQualidadeExpandido";
 
-// ---------------------------------------------
-// 💡 CORREÇÃO 1: Definindo o tipo de erro (assumindo que o erro tem uma prop 'erro')
-// ---------------------------------------------
+
 type ApiErro = { erro: string }; 
 
-// 💡 CORREÇÃO 2: Type Guard para verificar se é um erro
+
 const isApiError = (data: any): data is ApiErro => {
     return data && typeof data === 'object' && 'erro' in data;
 };
 
-// ---------------------------------------------
+
 
 function App() {
   const [cidade, setCidade] = useState("");
@@ -36,7 +34,7 @@ function App() {
   const [previsao, setPrevisao] = useState<Previsao | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // 💡 CORREÇÃO 3: Usando isApiError para filtrar e garantir que os estados recebam o tipo correto (ou null)
+ 
   const atualizarDados = (dados: Dados, nomeCidade: string) => {
     setClima(isApiError(dados.clima) ? null : dados.clima);
     setQualidade(isApiError(dados.qualidade) ? null : dados.qualidade); // Corrigido aqui também
@@ -67,17 +65,17 @@ function App() {
     }
   };
 
-  // 💡 CORREÇÃO 4: Usando isApiError antes de acessar 'cidade'
+  
   const handleDadosAtualizados = async (dados: Dados) => {
     setLoading(true);
     setErro(false);
     
     try {
-      // Verifica se dados.clima é válido antes de tentar acessar a propriedade 'cidade'
+    
       const nomeCidade = (!isApiError(dados.clima) && dados.clima?.cidade) || "Localização selecionada";
       
       atualizarDados(dados, nomeCidade);
-      setCidade(nomeCidade); // Atualizar o input também
+      setCidade(nomeCidade); 
     } catch (e) {
       console.error(e);
       setErro(true);
@@ -171,7 +169,7 @@ function App() {
         return (
           <>
             {clima || qualidade || incendios ? (
-              // 💡 CORREÇÃO 5: Adicionando onDadosAtualizados no modo Mapa (tela cheia)
+              
               <MapaClimaInterativo cidade={cidadeBuscada} onDadosAtualizados={handleDadosAtualizados} />
             ) : (
               fallbackCard("Mapa", "Não foi possível exibir o mapa.")
