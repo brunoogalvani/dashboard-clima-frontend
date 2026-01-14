@@ -40,7 +40,7 @@ export default function MapaClimaInterativo({ cidade }: Props): JSX.Element {
   useEffect(() => {
   async function buscarIncendios() {
     try {
-      const response = await fetch(`http://localhost:3000/api/incendios?cidade=${cidade}`);
+      const response = await fetch(`${BASE_API_URL}/api/incendios?cidade=${cidade}`);
       const data = await response.json();
 
       const lista = Array.isArray(data) ? data : data?.incendios;

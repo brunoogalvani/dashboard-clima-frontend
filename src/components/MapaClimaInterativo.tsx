@@ -88,7 +88,7 @@ export default function MapaClimaInterativo({
     <div className="bg-linear-to-br from-white to-emerald-50 rounded-2xl p-3 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-103 hover:-translate-y-1 duration-300 animate-fade-in relative">
       {showExpand && (
         <SquareArrowOutUpRight
-          className="absolute top-4 right-4 rounded-lg cursor-pointer hover:scale-110 transition-all w-5 h-5 text-gray-800 z-[1000]"
+          className="absolute top-4 right-4 rounded-lg cursor-pointer hover:scale-110 transition-all w-5 h-5 text-gray-800 z-1000"
           onClick={onExpand}
         />
       )}
