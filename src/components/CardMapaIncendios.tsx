@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaf
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat";
+import { BASE_API_URL } from "../config/apiConfig";
 
 interface Props {
   cidade: string;
@@ -24,7 +25,7 @@ export default function MapaClimaInterativo({ cidade }: Props): JSX.Element {
     async function buscarCoordenadas() {
       if (!cidade.trim()) return;
       try {
-        const response = await fetch(`http://localhost:3000/api/geocode?cidade=${cidade}`);
+        const response = await fetch(`${BASE_API_URL}/api/geocode?cidade=${cidade}`);
         const data = await response.json();
         if (data?.lat && data?.lon) {
           setCoordenadas({ lat: data.lat, lon: data.lon });

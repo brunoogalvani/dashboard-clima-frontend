@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { MapaClickHandler } from "./MapaClickHandler";
 import { buscarDadosPorCoordenadas } from "../services/dadosService";
+import { BASE_API_URL } from "../config/apiConfig";
 
 interface Props {
   cidade: string;
@@ -35,7 +36,7 @@ export default function MapaClimaInterativo({
     async function buscarCoordenadas() {
       if (!cidade.trim()) return;
       try {
-        const response = await fetch(`http://localhost:3000/api/geocode?cidade=${cidade}`);
+        const response = await fetch(`${BASE_API_URL}/api/geocode?cidade=${cidade}`);
         const data = await response.json();
         if (data && data.lat && data.lon) {
           setCoordenadas({ lat: data.lat, lon: data.lon });
