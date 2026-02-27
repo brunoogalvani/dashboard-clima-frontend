@@ -13,9 +13,9 @@ export default function CardPrevisao({ cidade, previsao, clima }: Props) {
 
   if (!previsao || !clima) {
     return (
-      <div className="p-4 bg-white/10 rounded-xl text-white text-center">
-        <h2 className="text-xl font-semibold mb-2">Previsão indisponível</h2>
-        <p>Não foi possível obter previsão para <strong>{cidade}</strong>.</p>
+      <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 border border-white/30 shadow-[0_4px_30px_rgba(0,0,0,0.1)] flex flex-col items-center justify-center text-center text-gray-700 animate-fade-in-scale hover:scale-103 hover:-translate-y-1 hover:shadow-emerald-500/20 transition-all duration-500 ease-in-out">
+        <h2 className="text-lg font-semibold text-gray-800 mb-2">Previsão indisponível</h2>
+        <p className="text-sm">Não foi possível obter previsão para <strong>{cidade}</strong>.</p>
       </div>
     );
   }

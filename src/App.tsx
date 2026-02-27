@@ -53,6 +53,7 @@ function App() {
     setQualidade(null);
     setIncendios(null);
     setPrevisao(null);
+    setCidadeBuscada('');
 
     try {
       const dados = await buscarDadosGerais(cidadeParaBuscar);
@@ -235,7 +236,7 @@ function App() {
               </div>
             )}
 
-            {(clima && qualidade && incendios) && (
+            {clima && (
               <div className="mt-3 text-center animate-fade-in">
                 <p className="text-gray-700 text-sm">
                   <strong>{clima.cidade}</strong> ({clima.pais}) —{" "}
