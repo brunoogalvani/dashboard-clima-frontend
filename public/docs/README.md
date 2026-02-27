@@ -8,12 +8,12 @@ O **PIMA** é uma plataforma interativa que exibe:
 - Focos de incêndio detectados por satélite
 - Mapas interativos de clima e incêndios
 
-O projeto é composto por dois repositórios:
+<!-- O projeto é composto por dois repositórios:
 
 - **Frontend (React + TypeScript)**  
   https://github.com/brunoogalvani/dashboard-clima-frontend  
 - **Backend (Node.js + Express)**  
-  https://github.com/brunoogalvani/dashboard-clima-backend  
+  https://github.com/brunoogalvani/dashboard-clima-backend   -->
 
 ---
 
@@ -44,3 +44,7 @@ pima/
 - [APIs Utilizadas](apis.md)
 - [Backend](backend.md)
 - [Frontend](frontend.md)
+
+--- 
+
+*** Alguns links foram ocultados em conformidade com o processo de revisão duplamente cega (double blind) adotado pelo veículo de submissão.

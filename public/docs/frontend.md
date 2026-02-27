@@ -50,3 +50,6 @@ E também endpoints individuais como:
 - /api/qualidade
 - /api/incendios
 
+--- 
+
+*** Alguns links foram ocultados em conformidade com o processo de revisão duplamente cega (double blind) adotado pelo veículo de submissão.
