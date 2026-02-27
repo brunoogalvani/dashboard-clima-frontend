@@ -17,8 +17,14 @@ function RecenterMap({ lat, lon }: { lat: number; lon: number }) {
   const map = useMap();
 
   useEffect(() => {
-    map.setView([lat, lon], 8, { animate: true });
-  }, [lat, lon, map]);
+    if (!map) return;
+
+    map.flyTo([lat, lon], 8, {
+      animate: true,
+      duration: 1,
+    });
+
+  }, [lat, lon]);
 
   return null;
 }
@@ -38,6 +44,7 @@ export default function MapaClimaInterativo({
       try {
         const response = await fetch(`${BASE_API_URL}/api/geocode?cidade=${cidade}`);
         const data = await response.json();
+        console.log(data)
         if (data && data.lat && data.lon) {
           setCoordenadas({ lat: data.lat, lon: data.lon });
         }
