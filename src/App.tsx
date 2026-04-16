@@ -16,8 +16,8 @@ import CardQualidadeExpandida from "./components/CardQualidadeExpandido";
 type ApiErro = { erro: string }; 
 
 
-const isApiError = (data: any): data is ApiErro => {
-    return data && typeof data === 'object' && 'erro' in data;
+const isApiError = (data: unknown): data is ApiErro => {
+    return !!data && typeof data === 'object' && 'erro' in data;
 };
 
 
@@ -46,7 +46,7 @@ function App() {
 
   const buscarDados = async (nomeCidade?: string) => {
     const cidadeParaBuscar = nomeCidade?.trim() || cidade.trim();
-    if (!cidade.trim()) return;
+    if (!cidadeParaBuscar.trim()) return;
     setLoading(true);
     setErro(false);
     setClima(null);

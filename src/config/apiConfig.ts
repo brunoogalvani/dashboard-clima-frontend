@@ -1,1 +1,1 @@
-export const BASE_API_URL = 'https://pima-backend.vercel.app';
+export const BASE_API_URL = import.meta.env.VITE_API_URL || 'https://pima-backend.vercel.app';

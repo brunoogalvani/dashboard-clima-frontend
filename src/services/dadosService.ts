@@ -2,7 +2,7 @@ import type { Dados } from "../types/apiTypes";
 import { BASE_API_URL } from "../config/apiConfig";
 
 export async function buscarDadosGerais(cidade: string): Promise<Dados> {
-  const res = await fetch(`${BASE_API_URL}/api/dados?cidade=${cidade}`);
+  const res = await fetch(`${BASE_API_URL}/api/dados?cidade=${encodeURIComponent(cidade)}`);
   if (!res.ok) throw new Error("Erro ao buscar dados");
   return res.json();
 }

@@ -26,7 +26,7 @@ function InputAutocompleteCidade({
     const timeout = setTimeout(async () => {
       setLoading(true);
       try {
-        const API_KEY = "Ga2J5fbWCKhjKkgcvf5qwn41QzIsd9";
+        const API_KEY = import.meta.env.VITE_CITY_API_KEY;
         const res = await fetch(
           `https://data-api.oxilor.com/rest/search-regions?type=city&first=5&searchTerm=${encodeURIComponent(
             value
