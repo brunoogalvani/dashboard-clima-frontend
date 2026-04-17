@@ -155,6 +155,43 @@ body,
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+/* Scrollbar custom para carrossel de previsão */
+.scrollbar-previsao {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(16, 185, 129, 0.5) transparent;
+}
+
+.scrollbar-previsao::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scrollbar-previsao::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 999px;
+}
+
+.scrollbar-previsao::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.6), rgba(6, 182, 212, 0.6));
+  border-radius: 999px;
+  transition: background 0.3s ease;
+}
+
+.scrollbar-previsao::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.9), rgba(6, 182, 212, 0.9));
+}
+
+:where(.dark) .scrollbar-previsao {
+  scrollbar-color: rgba(56, 189, 248, 0.5) transparent;
+}
+
+:where(.dark) .scrollbar-previsao::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.7), rgba(56, 189, 248, 0.7));
+}
+
+:where(.dark) .scrollbar-previsao::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, rgba(16, 185, 129, 1), rgba(56, 189, 248, 1));
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

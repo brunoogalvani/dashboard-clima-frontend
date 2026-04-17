@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { DateTime } from "luxon";
+import { CalendarDays, CloudRain, Sunrise, Sunset, ThermometerSun, ThermometerSnowflake } from "lucide-react";
 import type { Previsao, Clima } from "../types/apiTypes";
 
 interface Props {
@@ -74,55 +75,103 @@ export default function CardPrevisao({ cidade, previsao, clima }: Props) {
         </div>
       </div>
 
-      <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-slate-100">
-        Previsão para {cidade}
-      </h2>
-      <div className="mb-4">
-        <select
-          value={diasVisiveis}
-          onChange={(e) => setDiasVisiveis(Number(e.target.value))}
-          className="bg-white dark:bg-slate-700 dark:text-slate-100 dark:border-slate-600 border border-gray-200 p-1 rounded"
-        >
-          {Array.from({ length: 15 }).map((_, i) => (
-            <option key={i} value={i + 1}>
-              {i + 1} dia{i > 0 ? "s" : ""}
-            </option>
-          ))}
-        </select>
+      <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-slate-100 flex items-center gap-2">
+          <CalendarDays className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          Previsão para {cidade}
+        </h2>
+
+        <div className="inline-flex bg-gray-100 dark:bg-slate-800 rounded-xl p-1 border border-gray-200 dark:border-slate-700 shadow-sm">
+          {[3, 7, 14].map((n) => {
+            const ativo = diasVisiveis === n;
+            return (
+              <button
+                key={n}
+                onClick={() => setDiasVisiveis(n)}
+                className={`px-4 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-0 ${
+                  ativo
+                    ? "bg-linear-to-r from-emerald-600 to-cyan-600 dark:from-emerald-500 dark:to-sky-500 text-white shadow-md"
+                    : "text-gray-600 dark:text-slate-300 hover:text-gray-800 dark:hover:text-white"
+                }`}
+              >
+                {n} dias
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="w-full">
-        <div className="flex gap-4 overflow-x-auto pb-4 px-2 flex-nowrap">
-          {previsao.dias.slice(0, diasVisiveis).map((dia, index) => (
-            <div key={index} className="w-64 min-w-[16rem] bg-white dark:bg-slate-800 text-gray-800 dark:text-slate-100 rounded-lg p-3 border border-emerald-200 dark:border-slate-700 shadow-sm hover:shadow-lg hover:scale-103 transition-all duration-300 animate-fade-in animation-delay-100">
-              <p className="font-semibold mb-1">{DateTime.fromISO(dia.data).setLocale("pt-BR").toFormat("dd/MM, ccc")}</p>
+        <div className="flex gap-4 overflow-x-auto pb-4 px-2 flex-nowrap scrollbar-previsao snap-x snap-mandatory scroll-smooth">
+          {previsao.dias.slice(0, diasVisiveis).map((dia, index) => {
+            const data = DateTime.fromISO(dia.data).setLocale("pt-BR");
+            return (
+              <div
+                key={index}
+                className="snap-start w-56 min-w-[14rem] bg-linear-to-br from-white to-emerald-50 dark:from-slate-800 dark:to-slate-800 rounded-2xl p-4 border border-emerald-200 dark:border-slate-700 shadow-sm hover:shadow-lg hover:scale-103 hover:-translate-y-1 transition-all duration-300 animate-fade-in"
+                style={{ animationDelay: `${index * 60}ms` }}
+              >
+                <div className="text-center mb-3 pb-2 border-b border-emerald-100 dark:border-slate-700">
+                  <p className="text-xs uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-semibold">
+                    {data.toFormat("ccc")}
+                  </p>
+                  <p className="text-lg font-bold text-gray-800 dark:text-slate-100">
+                    {data.toFormat("dd/MM")}
+                  </p>
+                </div>
 
-              <p>
-                <span className="font-semibold">Máx: </span>
-                {Math.round(dia.temperatura_max)}°C
-              </p>
+                <div className="flex items-center justify-around mb-3">
+                  <div className="flex flex-col items-center gap-1">
+                    <ThermometerSun className="w-5 h-5 text-orange-500 dark:text-orange-400" />
+                    <p className="text-xl font-bold text-gray-800 dark:text-slate-100">
+                      {Math.round(dia.temperatura_max)}°
+                    </p>
+                    <p className="text-[10px] uppercase text-gray-500 dark:text-slate-400">Máx</p>
+                  </div>
+                  <div className="w-px h-12 bg-gray-200 dark:bg-slate-700" />
+                  <div className="flex flex-col items-center gap-1">
+                    <ThermometerSnowflake className="w-5 h-5 text-sky-500 dark:text-sky-400" />
+                    <p className="text-xl font-bold text-gray-800 dark:text-slate-100">
+                      {Math.round(dia.temperatura_min)}°
+                    </p>
+                    <p className="text-[10px] uppercase text-gray-500 dark:text-slate-400">Mín</p>
+                  </div>
+                </div>
 
-              <p>
-                <span className="font-semibold">Min: </span>
-                {Math.round(dia.temperatura_min)}°C
-              </p>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between bg-blue-50 dark:bg-slate-700/60 rounded-lg px-3 py-1.5">
+                    <div className="flex items-center gap-2">
+                      <CloudRain className="w-4 h-4 text-blue-500 dark:text-blue-400" />
+                      <span className="text-xs text-gray-600 dark:text-slate-300">Chuva</span>
+                    </div>
+                    <span className="text-sm font-semibold text-gray-800 dark:text-slate-100">
+                      {dia.probabilidade_chuva}%
+                    </span>
+                  </div>
 
-              <p>
-                <span className="font-semibold">Chuva: </span>
-                {dia.probabilidade_chuva}%
-              </p>
+                  <div className="flex items-center justify-between bg-amber-50 dark:bg-slate-700/60 rounded-lg px-3 py-1.5">
+                    <div className="flex items-center gap-2">
+                      <Sunrise className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+                      <span className="text-xs text-gray-600 dark:text-slate-300">Nascer</span>
+                    </div>
+                    <span className="text-sm font-semibold text-gray-800 dark:text-slate-100">
+                      {dia.nascer_do_sol}
+                    </span>
+                  </div>
 
-              <p>
-                <span className="font-semibold">Nascer do Sol: </span>
-                {dia.nascer_do_sol}
-              </p>
-
-              <p>
-                <span className="font-semibold">Pôr do Sol: </span>
-                {dia.por_do_sol}
-              </p>
-            </div>
-          ))}
+                  <div className="flex items-center justify-between bg-orange-50 dark:bg-slate-700/60 rounded-lg px-3 py-1.5">
+                    <div className="flex items-center gap-2">
+                      <Sunset className="w-4 h-4 text-orange-500 dark:text-orange-400" />
+                      <span className="text-xs text-gray-600 dark:text-slate-300">Pôr</span>
+                    </div>
+                    <span className="text-sm font-semibold text-gray-800 dark:text-slate-100">
+                      {dia.por_do_sol}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
