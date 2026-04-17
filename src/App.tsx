@@ -11,6 +11,8 @@ import Horario from "./components/Horario";
 import InputAutocompleteCidade from "./components/AutoCompleteCidade";
 import { buscarDadosGerais } from "./services/dadosService";
 import CardQualidadeExpandida from "./components/CardQualidadeExpandido";
+import { useHistoricoCidades } from "./hooks/useHistoricoCidades";
+import { Clock, X, MapPin } from "lucide-react";
 
 
 type ApiErro = { erro: string }; 
@@ -33,6 +35,7 @@ function App() {
   const [selected, setSelected] = useState("Dashboard");
   const [previsao, setPrevisao] = useState<Previsao | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { historico, adicionar, remover, limpar } = useHistoricoCidades();
 
  
   const atualizarDados = (dados: Dados, nomeCidade: string) => {
@@ -58,6 +61,7 @@ function App() {
     try {
       const dados = await buscarDadosGerais(cidadeParaBuscar);
       atualizarDados(dados, cidadeParaBuscar);
+      adicionar(cidadeParaBuscar);
     } catch (e) {
       console.error(e);
       setErro(true);
@@ -235,6 +239,57 @@ function App() {
                 </p>
               </div>
             )}
+
+            {historico.length > 0 &&  (
+    <div className="mt-4 animate-fade-in">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2 text-gray-600">
+          <Clock className="w-4 h-4" />
+          <p className="text-sm font-semibold">Buscas recentes</p>
+        </div>
+        <button
+          onClick={limpar}
+          className="text-xs text-gray-500 hover:text-red-500 transition-colors font-medium"
+        >
+          Limpar tudo
+        </button>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        {historico.map((cidade, idx) => (
+          <div
+            key={cidade}
+            style={{ animationDelay: `${idx * 60}ms` }}
+            className="group relative flex items-center gap-2 bg-gradient-to-r from-white/80 to-white/60
+  hover:from-emerald-50 hover:to-sky-50 backdrop-blur-md rounded-full pl-3 pr-2 py-1.5 text-sm text-gray-700 border
+  border-white/50 hover:border-emerald-300/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all
+  duration-300 animate-fade-in-scale cursor-pointer"
+            onClick={() => {
+              setCidade(cidade);
+              buscarDados(cidade);
+            }}
+          >
+            <MapPin className="w-3.5 h-3.5 text-emerald-600 group-hover:text-emerald-700 transition" />
+            <span className="font-medium group-hover:text-emerald-800 transition">
+              {cidade}
+            </span>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                remover(cidade);
+              }}
+              className="ml-1 p-0.5 rounded-full text-gray-400 hover:text-white hover:bg-red-400 opacity-0
+  group-hover:opacity-100 transition-all duration-200"
+              aria-label={`Remover ${cidade}`}
+            >
+              <X className="w-3 h-3" />
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
 
             {clima && (
               <div className="mt-3 text-center animate-fade-in">
