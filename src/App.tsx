@@ -278,8 +278,8 @@ function App() {
                 e.stopPropagation();
                 remover(cidade);
               }}
-              className="ml-1 p-0.5 rounded-full text-gray-400 hover:text-white hover:bg-red-400 opacity-0
-  group-hover:opacity-100 transition-all duration-200"
+              className="ml-1 p-1 rounded-full text-gray-400 hover:text-red-400 hover:bg-red-400/90 hover:scale-110 focus:outline-none
+   focus-visible:ring-2 focus-visible:ring-red-300 transition-all duration-200"
               aria-label={`Remover ${cidade}`}
             >
               <X className="w-3 h-3" />

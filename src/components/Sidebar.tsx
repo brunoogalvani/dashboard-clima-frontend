@@ -40,7 +40,7 @@ export default function Sidebar({ onSelect, onToggle, active = "Dashboard" }: Pr
 
         {open && (
           <div className="flex flex-col items-center gap-2 animate-fade-in">
-            <h1 className="text-lg font-semibold tracking-wide select-none">PIMA</h1>
+            <h1 className="text-4xl font-semibold tracking-wide select-none">PIMA</h1>
           </div>
         )}
       </div>
