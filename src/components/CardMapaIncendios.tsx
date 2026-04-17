@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat";
 import { BASE_API_URL } from "../config/apiConfig";
+import { useTheme } from "../hooks/useTheme";
 
 interface Props {
   cidade: string;
@@ -20,6 +21,7 @@ function RecenterMap({ lat, lon }: { lat: number; lon: number }) {
 export default function MapaClimaInterativo({ cidade }: Props): JSX.Element {
   const [coordenadas, setCoordenadas] = useState({ lat: -15.78, lon: -47.93 });
   const [incendios, setIncendios] = useState<{ lat: number; lon: number; intensidade: number }[]>([]);
+  const { tema } = useTheme();
 
   useEffect(() => {
     async function buscarCoordenadas() {
@@ -69,10 +71,10 @@ export default function MapaClimaInterativo({ cidade }: Props): JSX.Element {
 }, [cidade]);
 
   return (
-    <div className="bg-linear-to-br from-white to-emerald-50 rounded-2xl p-3 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-103 hover:-translate-y-1 duration-300 animate-fade-in">
-      <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">Focos de Incêndio</h3>
+    <div className="bg-linear-to-br from-white to-emerald-50 dark:from-slate-800 dark:to-slate-800 rounded-2xl p-3 border border-emerald-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-all hover:scale-103 hover:-translate-y-1 duration-300 animate-fade-in">
+      <h3 className="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2 text-center">Focos de Incêndio</h3>
 
-      <div className="w-full h-[260px] rounded-2xl overflow-hidden border border-emerald-200 shadow-sm">
+      <div className="w-full h-[260px] rounded-2xl overflow-hidden border border-emerald-200 dark:border-slate-700 shadow-sm">
         <MapContainer
           center={[coordenadas.lat, coordenadas.lon]}
           zoom={6}
@@ -86,8 +88,17 @@ export default function MapaClimaInterativo({ cidade }: Props): JSX.Element {
           style={{ height: "100%", width: "100%" }}
         >
           <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
+            key={tema}
+            url={
+              tema === "dark"
+                ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            }
+            attribution={
+              tema === "dark"
+                ? "&copy; <a href='https://www.openstreetmap.org/copyright'>OSM</a> &copy; <a href='https://carto.com/attributions'>CARTO</a>"
+                : "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
+            }
           />
 
           <RecenterMap lat={coordenadas.lat} lon={coordenadas.lon} />

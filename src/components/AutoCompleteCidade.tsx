@@ -88,15 +88,15 @@ function InputAutocompleteCidade({
         onKeyDown={handleKeyPress}
         placeholder="Digite a cidade"
         disabled={disabled}
-        className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+        className="w-full border-2 border-gray-200 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder:text-slate-400 rounded-xl px-4 py-3 text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
       />
 
       {focused && sugestoes.length > 0 && (
-        <ul className="absolute bg-white border border-gray-200 mt-1 w-full max-h-52 overflow-auto shadow-lg rounded-xl z-9999">
+        <ul className="absolute bg-white dark:bg-slate-700 border border-gray-200 dark:border-slate-600 mt-1 w-full max-h-52 overflow-auto shadow-lg rounded-xl z-9999">
           {sugestoes.map((cidade) => (
             <li
               key={cidade.id}
-              className="px-4 py-2 hover:bg-gray-100 text-gray-800 cursor-pointer transition-colors"
+              className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-slate-600 text-gray-800 dark:text-slate-100 cursor-pointer transition-colors"
               onMouseDown={() => handleSelect(cidade.name)}
             >
               {cidade.name} ({cidade.countryCode})
@@ -106,7 +106,7 @@ function InputAutocompleteCidade({
       )}
 
       {loading && (
-        <div className="absolute right-3 top-4 text-sm text-gray-500 animate-pulse">
+        <div className="absolute right-3 top-4 text-sm text-gray-500 dark:text-slate-400 animate-pulse">
           Carregando...
         </div>
       )}

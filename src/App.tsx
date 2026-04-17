@@ -12,7 +12,8 @@ import InputAutocompleteCidade from "./components/AutoCompleteCidade";
 import { buscarDadosGerais } from "./services/dadosService";
 import CardQualidadeExpandida from "./components/CardQualidadeExpandido";
 import { useHistoricoCidades } from "./hooks/useHistoricoCidades";
-import { Clock, X, MapPin } from "lucide-react";
+import { useTheme } from "./hooks/useTheme";
+import { Clock, X, MapPin, Sun, Moon } from "lucide-react";
 
 
 type ApiErro = { erro: string }; 
@@ -36,6 +37,7 @@ function App() {
   const [previsao, setPrevisao] = useState<Previsao | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { historico, adicionar, remover, limpar } = useHistoricoCidades();
+  const { tema, alternar } = useTheme();
 
  
   const atualizarDados = (dados: Dados, nomeCidade: string) => {
@@ -91,12 +93,15 @@ function App() {
 
   const renderContent = () => {
     if (loading) {
-      return <p className="text-gray-700 text-center mt-6">Carregando dados...</p>;
+      return <p className="text-gray-700 dark:text-slate-300 text-center mt-6">Carregando dados...</p>;
     }
 
     const fallbackCard = (titulo: string, mensagem: string) => (
-      <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 border border-white/30 shadow-[0_4px_30px_rgba(0,0,0,0.1)] flex flex-col items-center justify-center text-center text-gray-700 animate-fade-in-scale hover:scale-103 hover:-translate-y-1 hover:shadow-emerald-500/20 transition-all duration-500 ease-in-out">
-        <h3 className="text-lg font-semibold text-gray-800 mb-2">{titulo}</h3>
+      <div className="bg-white/70 dark:bg-slate-700/70 backdrop-blur-xl rounded-2xl p-6 border border-white/30
+  dark:border-slate-600/50 shadow-[0_4px_30px_rgba(0,0,0,0.1)] flex flex-col items-center justify-center text-center
+  text-gray-700 dark:text-slate-200 animate-fade-in-scale hover:scale-103 hover:-translate-y-1
+  hover:shadow-emerald-500/20 transition-all duration-500 ease-in-out">
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-slate-100 mb-2">{titulo}</h3>
         <p className="text-sm">{mensagem}</p>
       </div>
     );
@@ -105,7 +110,7 @@ function App() {
       case "Dashboard":
         if (!cidadeBuscada) {
           return (
-            <p className="text-gray-600 text-center mt-6">
+            <p className="text-gray-600 dark:text-slate-300 text-center mt-6">
               Digite uma cidade para visualizar os dados ambientais.
             </p>
           );
@@ -191,10 +196,13 @@ function App() {
     <div
       className="flex min-h-screen bg-linear-to-br from-emerald-300 via-sky-300 to-teal-400 transition-all duration-700 ease-in-out overflow-hidden"
       style={{
-        backgroundImage:
-          `radial-gradient(at top left, rgba(255, 255, 255, 0.08), transparent 70%), linear-gradient(to bottom right, #065f46, #0e7490, #115e59)`,
-      }}
-    >
+        backgroundImage: tema === "dark"
+        ? `radial-gradient(at top left, rgba(16, 185, 129, 0.1), transparent 70%), linear-gradient(to bottom right,
+  #0f172a, #1e293b, #0f172a)`
+        : `radial-gradient(at top left, rgba(255, 255, 255, 0.08), transparent 70%), linear-gradient(to bottom right,
+  #065f46, #0e7490, #115e59)`,
+    }}
+  >
 
       {/* Sidebar */}
       <Sidebar onSelect={setSelected} onToggle={setSidebarOpen} active={selected} />
@@ -202,13 +210,27 @@ function App() {
       {/* Conteúdo principal */}
       <div className={`${sidebarOpen ? "ml-64" : "ml-20"} flex-1 flex justify-center items-center p-3 md:p-6 overflow-y-auto transition-all duration-700 ease-in-out`}>
         <div
-          className="w-full max-w-6xl bg-white/80 backdrop-blur-2xl rounded-3xl shadow-[0_8px_40px_-12px_rgba(0,0,0,0.3)] border border-white/20 hover:scale-[1.01] hover:shadow-emerald-500/20 transition-all duration-700 ease-in-out flex flex-col"
+           className="w-full max-w-6xl bg-white/80 dark:bg-slate-800/80 backdrop-blur-2xl rounded-3xl
+  shadow-[0_8px_40px_-12px_rgba(0,0,0,0.3)] border border-white/20 dark:border-slate-700/50 hover:scale-[1.01]
+  hover:shadow-emerald-500/20 transition-all duration-700 ease-in-out flex flex-col"
         >
 
           {/* Header */}
-          <div className="bg-linear-to-r from-green-600 to-cyan-600 p-2 text-center rounded-t-3xl shadow-md animate-slide-down">
+          <div className="relative bg-linear-to-r from-green-600 to-cyan-600 dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 p-2 text-center rounded-t-3xl shadow-md animate-slide-down">
             <h1 className="text-4xl font-bold text-white tracking-wide drop-shadow-sm">PIMA</h1>
-            <p className="text-emerald-50 text-sm italic">Plataforma Integrada de Monitoramento Ambiental</p>
+            <p className="text-emerald-50 dark:text-slate-400 text-sm italic">Plataforma Integrada de Monitoramento Ambiental</p>
+
+            <button
+              onClick={alternar}
+              aria-label={tema === "dark" ? "Ativar modo claro" : "Ativar modo escuro"}
+              className="absolute top-3 right-4 p-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white
+          transition-all duration-300 hover:scale-110"
+            >
+              {tema === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
+
+
+            
           </div>
 
           {/* Pesquisa */}
@@ -226,15 +248,15 @@ function App() {
               <button
                 onClick={() => buscarDados(cidade)}
                 disabled={loading || !cidade.trim()}
-                className="bg-linear-to-r from-sky-400 to-blue-400 hover:from-sky-500 hover:to-blue-500 text-white font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all"
+                className="bg-linear-to-r from-sky-400 to-blue-400 hover:from-sky-500 hover:to-blue-500 dark:from-emerald-500 dark:to-sky-500 dark:hover:from-emerald-600 dark:hover:to-sky-600 text-white font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? "..." : "Buscar"}
               </button>
             </div>
 
             {erro && (
-              <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl">
-                <p className="text-red-600 text-sm text-center">
+              <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-xl">
+                <p className="text-red-600 dark:text-red-300 text-sm text-center">
                   Não foi possível encontrar a cidade. Tente novamente.
                 </p>
               </div>
@@ -243,13 +265,13 @@ function App() {
             {historico.length > 0 &&  (
     <div className="mt-4 animate-fade-in">
       <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2 text-gray-600">
+        <div className="flex items-center gap-2 text-gray-600 dark:text-slate-300">
           <Clock className="w-4 h-4" />
           <p className="text-sm font-semibold">Buscas recentes</p>
         </div>
         <button
           onClick={limpar}
-          className="text-xs text-gray-500 hover:text-red-500 transition-colors font-medium"
+          className="text-xs text-gray-500 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-400 transition-colors font-medium"
         >
           Limpar tudo
         </button>
@@ -260,9 +282,9 @@ function App() {
           <div
             key={cidade}
             style={{ animationDelay: `${idx * 60}ms` }}
-            className="group relative flex items-center gap-2 bg-gradient-to-r from-white/80 to-white/60
-  hover:from-emerald-50 hover:to-sky-50 backdrop-blur-md rounded-full pl-3 pr-2 py-1.5 text-sm text-gray-700 border
-  border-white/50 hover:border-emerald-300/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all
+            className="group relative flex items-center gap-2 bg-gradient-to-r from-white/80 to-white/60 dark:from-slate-700/80 dark:to-slate-700/60
+  hover:from-emerald-50 hover:to-sky-50 dark:hover:from-emerald-900/40 dark:hover:to-sky-900/40 backdrop-blur-md rounded-full pl-3 pr-2 py-1.5 text-sm text-gray-700
+  dark:text-slate-200 border border-white/50 dark:border-slate-600/50 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all
   duration-300 animate-fade-in-scale cursor-pointer"
             onClick={() => {
               setCidade(cidade);
@@ -293,7 +315,7 @@ function App() {
 
             {clima && (
               <div className="mt-3 text-center animate-fade-in">
-                <p className="text-gray-700 text-sm">
+                <p className="text-gray-700 dark:text-slate-200 text-sm ">
                   <strong>{clima.cidade}</strong> ({clima.pais}) —{" "}
                   <span className="font-semibold"><Horario fuso={clima.fuso_horario} /></span>
                 </p>

@@ -35,20 +35,20 @@ export default function CardQualidade({ qualidade, showExpand, onExpand }: Props
   }
 
   return (
-    <div className="bg-linear-to-br from-white to-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm hover:shadow-lg hover:scale-103 hover:-translate-y-1 transition-all duration-300 animate-fade-in animation-delay-100">
+    <div className="bg-linear-to-br from-white to-emerald-50 dark:from-slate-800 dark:to-slate-800 rounded-2xl p-4 border border-emerald-200 dark:border-slate-700 shadow-sm hover:shadow-lg hover:scale-103 hover:-translate-y-1 transition-all duration-300 animate-fade-in animation-delay-100">
       {showExpand && (
         <SquareArrowOutUpRight
-          className="absolute top-4 right-4 rounded-lg cursor-pointer hover:scale-110 transition-all w-5 h-5 text-gray-800"
+          className="absolute top-4 right-4 rounded-lg cursor-pointer hover:scale-110 transition-all w-5 h-5 text-gray-800 dark:text-slate-200"
           onClick={onExpand}
         />
       )}
 
-      <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">
+      <h3 className="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2 text-center">
         Qualidade do Ar
       </h3>
 
       {!qualidade ? (
-        <p className="text-gray-600 text-sm text-center">
+        <p className="text-gray-600 dark:text-slate-300 text-sm text-center">
           Busque uma cidade para ver os dados.
         </p>
       ) : (
@@ -57,20 +57,20 @@ export default function CardQualidade({ qualidade, showExpand, onExpand }: Props
             {qualidade.aqi}
           </p>
 
-          <p className="text-gray-500 text-sm">{descricao(qualidade.aqi)}</p>
+          <p className="text-gray-500 dark:text-slate-400 text-sm">{descricao(qualidade.aqi)}</p>
 
           <div className="grid grid-cols-2 gap-2 mt-2 mb-3">
-            <div className="bg-white/70 rounded-lg p-2">
-              <p className="text-gray-500 text-xs mb-1">Poluente Dominante</p>
-              <p className="font-semibold text-gray-800 uppercase">
+            <div className="bg-white/70 dark:bg-slate-700/70 rounded-lg p-2">
+              <p className="text-gray-500 dark:text-slate-400 text-xs mb-1">Poluente Dominante</p>
+              <p className="font-semibold text-gray-800 dark:text-slate-100 uppercase">
                 {qualidade.dominancia || "-"}
               </p>
             </div>
             {qualidade.poluentes != null ? (
               qualidade.poluentes.slice(0,3).map((poluente) => (
-                <div key={poluente.tipo} className="bg-white/70 rounded-lg p-2">
-                  <p className="text-gray-500 text-xs mb-1">{getPoluenteName(poluente.tipo)}</p>
-                  <p className="font-semibold text-gray-800">
+                <div key={poluente.tipo} className="bg-white/70 dark:bg-slate-700/70 rounded-lg p-2">
+                  <p className="text-gray-500 dark:text-slate-400 text-xs mb-1">{getPoluenteName(poluente.tipo)}</p>
+                  <p className="font-semibold text-gray-800 dark:text-slate-100">
                     {poluente.valor ? `${poluente.valor} µg/m³` : '-'}
                   </p>
                 </div>
@@ -78,8 +78,8 @@ export default function CardQualidade({ qualidade, showExpand, onExpand }: Props
             ) : null}
           </div>
 
-          <div className="text-center pt-2 border-t border-emerald-200">
-            <p className="text-xs text-gray-500">
+          <div className="text-center pt-2 border-t border-emerald-200 dark:border-slate-700">
+            <p className="text-xs text-gray-500 dark:text-slate-400">
               {qualidade.hora_atualizada}
             </p>
           </div>

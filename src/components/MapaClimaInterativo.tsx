@@ -5,6 +5,7 @@ import { SquareArrowOutUpRight } from "lucide-react";
 import { MapaClickHandler } from "./MapaClickHandler";
 import { buscarDadosPorCoordenadas } from "../services/dadosService";
 import { BASE_API_URL } from "../config/apiConfig";
+import { useTheme } from "../hooks/useTheme";
 
 interface Props {
   cidade: string;
@@ -37,6 +38,7 @@ export default function MapaClimaInterativo({
 }: Props): JSX.Element {
   const [coordenadas, setCoordenadas] = useState({ lat: -15.78, lon: -47.93 });
   const [buscando, setBuscando] = useState(false);
+  const { tema } = useTheme();
 
   useEffect(() => {
     async function buscarCoordenadas() {
@@ -92,20 +94,20 @@ export default function MapaClimaInterativo({
   }
 
   return (
-    <div className="bg-linear-to-br from-white to-emerald-50 rounded-2xl p-3 border border-emerald-200 shadow-sm hover:shadow-lg transition-all hover:scale-103 hover:-translate-y-1 duration-300 animate-fade-in relative">
+    <div className="bg-linear-to-br from-white to-emerald-50 dark:from-slate-800 dark:to-slate-800 rounded-2xl p-3 border border-emerald-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-all hover:scale-103 hover:-translate-y-1 duration-300 animate-fade-in relative">
       {showExpand && (
         <SquareArrowOutUpRight
-          className="absolute top-4 right-4 rounded-lg cursor-pointer hover:scale-110 transition-all w-5 h-5 text-gray-800 z-1000"
+          className="absolute top-4 right-4 rounded-lg cursor-pointer hover:scale-110 transition-all w-5 h-5 text-gray-800 dark:text-slate-200 z-1000"
           onClick={onExpand}
         />
       )}
 
-      <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">
+      <h3 className="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2 text-center">
         Mapa Interativo
-        {buscando && <span className="text-sm text-gray-500 ml-2">(buscando...)</span>}
+        {buscando && <span className="text-sm text-gray-500 dark:text-slate-400 ml-2">(buscando...)</span>}
       </h3>
-      
-      <div className="w-full h-[250px] rounded-2xl overflow-hidden border border-emerald-200 shadow-sm">
+
+      <div className="w-full h-[250px] rounded-2xl overflow-hidden border border-emerald-200 dark:border-slate-700 shadow-sm">
         <MapContainer
           center={[coordenadas.lat, coordenadas.lon]}
           zoom={5}
@@ -119,8 +121,17 @@ export default function MapaClimaInterativo({
           style={{ height: "100%", width: "100%", cursor: buscando ? "wait" : "pointer" }}
         >
           <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+            key={tema}
+            url={
+              tema === "dark"
+                ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            }
+            attribution={
+              tema === "dark"
+                ? "&copy; <a href='https://www.openstreetmap.org/copyright'>OSM</a> &copy; <a href='https://carto.com/attributions'>CARTO</a>"
+                : "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+            }
           />
 
           <RecenterMap lat={coordenadas.lat} lon={coordenadas.lon} />
@@ -129,8 +140,8 @@ export default function MapaClimaInterativo({
             center={[coordenadas.lat, coordenadas.lon]}
             radius={8}
             pathOptions={{
-              color: "#0d5fd1",
-              fillColor: "#0d5fd1",
+              color: tema === "dark" ? "#38bdf8" : "#0d5fd1",
+              fillColor: tema === "dark" ? "#38bdf8" : "#0d5fd1",
               fillOpacity: 0.8,
             }}
           />
@@ -138,8 +149,8 @@ export default function MapaClimaInterativo({
           <MapaClickHandler onClick={handleMapClick} />
         </MapContainer>
       </div>
-      
-      <p className="text-xs text-gray-500 text-center mt-2">
+
+      <p className="text-xs text-gray-500 dark:text-slate-400 text-center mt-2">
         Clique no mapa para buscar dados de outra localização
       </p>
     </div>
