@@ -4,7 +4,6 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat";
 import { BASE_API_URL } from "../config/apiConfig";
-import { useTheme } from "../hooks/useTheme";
 
 interface Props {
   cidade: string;
@@ -21,7 +20,6 @@ function RecenterMap({ lat, lon }: { lat: number; lon: number }) {
 export default function MapaClimaInterativo({ cidade }: Props): JSX.Element {
   const [coordenadas, setCoordenadas] = useState({ lat: -15.78, lon: -47.93 });
   const [incendios, setIncendios] = useState<{ lat: number; lon: number; intensidade: number }[]>([]);
-  const { tema } = useTheme();
 
   useEffect(() => {
     async function buscarCoordenadas() {
@@ -88,17 +86,8 @@ export default function MapaClimaInterativo({ cidade }: Props): JSX.Element {
           style={{ height: "100%", width: "100%" }}
         >
           <TileLayer
-            key={tema}
-            url={
-              tema === "dark"
-                ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-                : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            }
-            attribution={
-              tema === "dark"
-                ? "&copy; <a href='https://www.openstreetmap.org/copyright'>OSM</a> &copy; <a href='https://carto.com/attributions'>CARTO</a>"
-                : "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
-            }
+            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+            attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OSM</a> &copy; <a href='https://carto.com/attributions'>CARTO</a>"
           />
 
           <RecenterMap lat={coordenadas.lat} lon={coordenadas.lon} />

@@ -121,17 +121,8 @@ export default function MapaClimaInterativo({
           style={{ height: "100%", width: "100%", cursor: buscando ? "wait" : "pointer" }}
         >
           <TileLayer
-            key={tema}
-            url={
-              tema === "dark"
-                ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-                : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            }
-            attribution={
-              tema === "dark"
-                ? "&copy; <a href='https://www.openstreetmap.org/copyright'>OSM</a> &copy; <a href='https://carto.com/attributions'>CARTO</a>"
-                : "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-            }
+            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+            attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OSM</a> &copy; <a href='https://carto.com/attributions'>CARTO</a>"
           />
 
           <RecenterMap lat={coordenadas.lat} lon={coordenadas.lon} />

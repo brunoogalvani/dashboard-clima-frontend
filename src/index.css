@@ -236,5 +236,9 @@ button {
     color: #213547;
     background-color: #ffffff;
   }
-  
+
+}
+
+:where(.dark) .leaflet-tile {
+  filter: invert(1) hue-rotate(180deg) brightness(0.95) contrast(0.85) saturate(0.65);
 }
